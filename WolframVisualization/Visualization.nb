@@ -10,44 +10,48 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[      9336,        235]
-NotebookOptionsPosition[      8037,        206]
-NotebookOutlinePosition[      8433,        222]
-CellTagsIndexPosition[      8390,        219]
+NotebookDataLength[     10613,        252]
+NotebookOptionsPosition[      9630,        228]
+NotebookOutlinePosition[     10024,        244]
+CellTagsIndexPosition[      9981,        241]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
 Notebook[{
-
-Cell[CellGroupData[{
 Cell[BoxData[
- RowBox[{
-  RowBox[{"numberOfPoints", " ", "=", " ", 
-   RowBox[{"ToExpression", "[", 
-    RowBox[{"Import", "[", 
-     RowBox[{
-     "\"\</Users/arsenytokarev/Desktop/Vortex/Wolfram/coordinates.txt\>\"", 
-      ",", " ", 
-      RowBox[{"{", 
-       RowBox[{"\"\<Lines\>\"", ",", " ", "1"}], "}"}]}], "]"}], "]"}]}], 
-  ";"}]], "Input",
+ RowBox[{"\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{
+    "coordinatesPath", " ", "=", " ", 
+     "\"\</Users/arsenytokarev/Desktop/ConvexHull_BMSTU/WolframVisualization/\
+coordinates.txt\>\""}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+    "firstMethodPath", " ", "=", " ", 
+     "\"\</Users/arsenytokarev/Desktop/ConvexHull_BMSTU/WolframVisualization/\
+Convex Hull Points (Method I).txt\>\""}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+    "secondMethodPath", " ", "=", " ", 
+     "\"\</Users/arsenytokarev/Desktop/ConvexHull_BMSTU/WolframVisualization/\
+Convex Hull Points (Method II).txt\>\""}], ";"}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"numberOfPoints", " ", "=", " ", 
+     RowBox[{"ToExpression", "[", "\[IndentingNewLine]", 
+      RowBox[{"Import", "[", 
+       RowBox[{"coordinatesPath", ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"\"\<Lines\>\"", ",", " ", "1"}], "}"}]}], " ", "]"}], 
+      "\[IndentingNewLine]", "]"}]}], ";"}]}]}]], "Input",
  CellChangeTimes->{{3.811865360210464*^9, 3.811865390999728*^9}, {
   3.811865426771009*^9, 3.81186550000611*^9}, {3.811865782314986*^9, 
-  3.811865821169325*^9}},
- CellLabel->"In[1]:=",ExpressionUUID->"9b026a79-262a-45c9-969e-9e5464ac2190"],
-
-Cell[BoxData[
- TemplateBox[{
-  "Import", "nffil", 
-   "\"File \\!\\(\\*RowBox[{\\\"\\\\\\\"/Users/arsenytokarev/Desktop/Vortex/\
-Wolfram/coordinates.txt\\\\\\\"\\\"}]\\) not found during \\!\\(\\*RowBox[{\\\
-\"Import\\\"}]\\).\"", 2, 1, 1, 21761110943012145157, "Local"},
-  "MessageTemplate"]], "Message", "MSG",
- CellChangeTimes->{3.816949047954214*^9},
- CellLabel->
-  "During evaluation of \
-In[1]:=",ExpressionUUID->"abe0f439-f1c0-49e4-bd6f-6df015c23f78"]
-}, Open  ]],
+  3.811865821169325*^9}, {3.8169496625002317`*^9, 3.816949666442424*^9}, {
+  3.8169500313662252`*^9, 3.81695015443559*^9}, {3.81695029186769*^9, 
+  3.816950299203229*^9}},
+ FontSize->14,
+ CellLabel->"In[79]:=",ExpressionUUID->"9b026a79-262a-45c9-969e-9e5464ac2190"],
 
 Cell[BoxData[{
  RowBox[{
@@ -60,28 +64,29 @@ Cell[BoxData[{
     RowBox[{
      RowBox[{"numberOfPoints", "*", " ", "2"}], " ", "+", " ", "2"}]}], ",", 
    " ", 
-   RowBox[{"i", "+=", " ", "2"}], ",", " ", 
+   RowBox[{"i", "+=", " ", "2"}], ",", " ", "\[IndentingNewLine]", 
    RowBox[{"AppendTo", "[", 
     RowBox[{"points", ",", 
      RowBox[{"Point", "[", 
-      RowBox[{"ToExpression", "[", 
-       RowBox[{"Take", "[", 
+      RowBox[{"ToExpression", "[", "\[IndentingNewLine]", 
+       RowBox[{"Take", "[", "\[IndentingNewLine]", 
         RowBox[{
          RowBox[{"Import", "[", 
-          RowBox[{
-          "\"\</Users/arsenytokarev/Desktop/Vortex/Wolfram/coordinates.txt\>\"\
-", ",", "\"\<Words\>\""}], "]"}], ",", 
+          RowBox[{"coordinatesPath", ",", "\"\<Words\>\""}], "]"}], ",", 
          RowBox[{"{", 
           RowBox[{"i", ",", " ", 
-           RowBox[{"i", "+", "1"}]}], "}"}]}], "]"}], "]"}], "]"}]}], "]"}]}],
-   "]"}]}], "Input",
+           RowBox[{"i", "+", "1"}]}], "}"}]}], "]"}], "\[IndentingNewLine]", 
+       "]"}], "\[IndentingNewLine]", "]"}]}], "\[IndentingNewLine]", "]"}]}], 
+  "\[IndentingNewLine]", "]"}]}], "Input",
  CellChangeTimes->{{3.811865853034299*^9, 3.8118658545929832`*^9}, {
    3.811865919299926*^9, 3.811865939914819*^9}, {3.81186608836122*^9, 
    3.8118661364459047`*^9}, {3.8118663006666737`*^9, 3.811866319414137*^9}, {
    3.811866351830184*^9, 3.8118664084872637`*^9}, {3.8118664446480913`*^9, 
    3.811866447460195*^9}, {3.811866553232594*^9, 3.811866553630883*^9}, 
-   3.811866651941588*^9},
- CellLabel->"In[2]:=",ExpressionUUID->"15469992-236b-4d51-b338-01e5a0e1ab6c"],
+   3.811866651941588*^9, 3.8169499846451283`*^9, {3.8169501633474407`*^9, 
+   3.816950209407493*^9}, 3.816950261244156*^9},
+ FontSize->14,
+ CellLabel->"In[83]:=",ExpressionUUID->"15469992-236b-4d51-b338-01e5a0e1ab6c"],
 
 Cell[CellGroupData[{
 
@@ -92,9 +97,7 @@ Cell[BoxData[
     RowBox[{"numberOfConvexHullPoints", " ", "=", " ", 
      RowBox[{"ToExpression", "[", 
       RowBox[{"Import", "[", 
-       RowBox[{
-       "\"\</Users/arsenytokarev/Desktop/Vortex/Wolfram/Convex Hull Points \
-(Method I).txt\>\"", ",", " ", 
+       RowBox[{"firstMethodPath", ",", " ", 
         RowBox[{"{", 
          RowBox[{"\"\<Lines\>\"", ",", " ", "1"}], "}"}]}], "]"}], "]"}]}], 
     ";"}], "\[IndentingNewLine]", 
@@ -115,13 +118,11 @@ Cell[BoxData[
         RowBox[{"Take", "[", 
          RowBox[{
           RowBox[{"Import", "[", 
-           RowBox[{
-           "\"\</Users/arsenytokarev/Desktop/Vortex/Wolfram/Convex Hull \
-Points (Method I).txt\>\"", ",", " ", "\"\<Words\>\""}], "]"}], ",", 
+           RowBox[{"firstMethodPath", ",", " ", "\"\<Words\>\""}], "]"}], ",", 
           RowBox[{"{", 
            RowBox[{"i", ",", " ", 
             RowBox[{"i", "+", "1"}]}], "}"}]}], "]"}], "]"}]}], "]"}]}], 
-    "]"}], "\[IndentingNewLine]", 
+    "\[IndentingNewLine]", "]"}], "\[IndentingNewLine]", 
    RowBox[{"AppendTo", "[", 
     RowBox[{"convexHullPoints", ",", " ", 
      RowBox[{"Part", "[", 
@@ -132,38 +133,39 @@ Points (Method I).txt\>\"", ",", " ", "\"\<Words\>\""}], "]"}], ",",
    3.811867133912788*^9}, {3.811867181260888*^9, 3.811867182261334*^9}, {
    3.811867240358643*^9, 3.811867314693777*^9}, {3.811867346847856*^9, 
    3.81186740416466*^9}, {3.811867660256791*^9, 3.8118676617814837`*^9}, 
-   3.811867701482655*^9, {3.811868309710174*^9, 3.8118683328816843`*^9}},
- CellLabel->"In[4]:=",ExpressionUUID->"17e72e2a-df06-43e5-8300-4f16628f8c88"],
-
-Cell[BoxData[
- TemplateBox[{
-  "Import", "nffil", 
-   "\"File \\!\\(\\*RowBox[{\\\"\\\\\\\"/Users/arsenytokarev/Desktop/Vortex/\
-Wolfram/Convex Hull Points (Method I).txt\\\\\\\"\\\"}]\\) not found during \
-\\!\\(\\*RowBox[{\\\"Import\\\"}]\\).\"", 2, 4, 2, 21761110943012145157, 
-   "Local"},
-  "MessageTemplate"]], "Message", "MSG",
- CellChangeTimes->{3.816949048125731*^9},
- CellLabel->
-  "During evaluation of \
-In[4]:=",ExpressionUUID->"dcbf15dc-119b-4d3c-87ba-fdba3db36fd0"],
-
-Cell[BoxData[
- TemplateBox[{
-  "Part", "partw", 
-   "\"Part \\!\\(\\*RowBox[{\\\"1\\\"}]\\) of \\!\\(\\*RowBox[{\\\"{\\\", \
-\\\"}\\\"}]\\) does not exist.\"", 2, 7, 3, 21761110943012145157, "Local"},
-  "MessageTemplate"]], "Message", "MSG",
- CellChangeTimes->{3.816949048132276*^9},
- CellLabel->
-  "During evaluation of \
-In[4]:=",ExpressionUUID->"1d36f93f-1ad6-4e85-9cd9-855350e8549b"],
+   3.811867701482655*^9, {3.811868309710174*^9, 3.8118683328816843`*^9}, {
+   3.816949685130834*^9, 3.8169496871696157`*^9}, 3.816950018296322*^9, 
+   3.816950276270125*^9, 3.816950313279258*^9, {3.8169503632521133`*^9, 
+   3.8169503721521397`*^9}},
+ FontSize->14,
+ CellLabel->"In[85]:=",ExpressionUUID->"17e72e2a-df06-43e5-8300-4f16628f8c88"],
 
 Cell[BoxData[
  RowBox[{"{", 
   RowBox[{
-   RowBox[{"{", "}"}], "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}],
-   "}"}]], "Output",
+   RowBox[{"{", 
+    RowBox[{"9825.5`", ",", "7533.56`"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"9346.93`", ",", 
+     RowBox[{"-", "5194.16`"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"726.859`", ",", 
+     RowBox[{"-", "8847.07`"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"-", "2189.59`"}], ",", 
+     RowBox[{"-", "6788.65`"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"-", "8976.56`"}], ",", 
+     RowBox[{"-", "605.643`"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"-", "7011.91`"}], ",", "7621.98`"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"6867.73`", ",", "9304.36`"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"9825.5`", ",", "7533.56`"}], "}"}]}], "}"}]], "Output",
  CellChangeTimes->{
   3.8118683396845407`*^9, {3.811868834677265*^9, 3.8118688390881567`*^9}, {
    3.811869279745441*^9, 3.811869282432199*^9}, {3.811869729317214*^9, 
@@ -173,8 +175,11 @@ Cell[BoxData[
    3.8119002218885183`*^9}, {3.811901139723559*^9, 3.811901149630424*^9}, {
    3.8120171347171183`*^9, 3.812017151830687*^9}, 3.812017184662032*^9, {
    3.8120172984744987`*^9, 3.812017305844635*^9}, {3.812017608545525*^9, 
-   3.8120176806502647`*^9}, 3.8120177474410563`*^9, 3.816949048136445*^9},
- CellLabel->"Out[7]=",ExpressionUUID->"bb71d87d-aa4a-478e-a08f-03cf11e12b09"]
+   3.8120176806502647`*^9}, 3.8120177474410563`*^9, 3.816949048136445*^9, 
+   3.8169498418115683`*^9, 3.816949986850134*^9, 3.816950019710281*^9, {
+   3.8169502835371637`*^9, 3.8169503144677753`*^9}, 3.816950390463085*^9},
+ FontSize->14,
+ CellLabel->"Out[88]=",ExpressionUUID->"6e90e920-867e-42c0-97e6-f332820755d4"]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -190,22 +195,39 @@ Cell[BoxData[
    3.8118674254518433`*^9, 3.81186743326341*^9}, {3.8118684181293*^9, 
    3.8118684185528793`*^9}, {3.811868494613597*^9, 3.811868506563119*^9}, 
    3.811901161609846*^9},
- CellLabel->"In[8]:=",ExpressionUUID->"1d35e5ea-f65c-44b1-b25b-bd2ed3389d92"],
+ FontSize->14,
+ CellLabel->"In[89]:=",ExpressionUUID->"1d35e5ea-f65c-44b1-b25b-bd2ed3389d92"],
 
 Cell[BoxData[
- GraphicsBox[{{}, LineBox[{Part[{}, 1]}]}]], "Output",
+ GraphicsBox[{{PointBox[{1315.38, 4586.5}], PointBox[{-2189.59, -6788.65}], 
+    PointBox[{9346.93, -5194.16}], PointBox[{-345.721, 5297}], 
+    PointBox[{76.9819, -668.422}], PointBox[{6867.73, 9304.36}], 
+    PointBox[{-5269.29, 6539.19}], PointBox[{-7011.91, 7621.98}], 
+    PointBox[{-474.645, -3282.34}], PointBox[{7564.1, 3653.39}], 
+    PointBox[{9825.5, 7533.56}], PointBox[{726.859, -8847.07}], 
+    PointBox[{-4364.11, 4777.32}], PointBox[{-2749.07, -1665.07}], 
+    PointBox[{-8976.56, -605.643}], PointBox[{-5045.23, 3190.33}], 
+    PointBox[{4939.77, 907.329}], PointBox[{-737.491, -3841.42}], 
+    PointBox[{9138.17, 4644.46}], PointBox[{500.84, 7702.05}]}, 
+   LineBox[{{9825.5, 7533.56}, {9346.93, -5194.16}, {
+    726.859, -8847.07}, {-2189.59, -6788.65}, {-8976.56, -605.643}, {-7011.91,
+     7621.98}, {6867.73, 9304.36}, {9825.5, 7533.56}}]}]], "Output",
  CellChangeTimes->{
   3.812017184666882*^9, 3.8120173058497963`*^9, {3.812017608568018*^9, 
-   3.812017680655274*^9}, 3.81201774744771*^9, 3.816949048155245*^9},
- CellLabel->"Out[8]=",ExpressionUUID->"97fbe90e-d6cc-4129-947e-5f6aec4fdf47"]
+   3.812017680655274*^9}, 3.81201774744771*^9, 3.816949048155245*^9, 
+   3.816949841846636*^9, 3.816949986873561*^9, 3.8169500197154016`*^9, {
+   3.816950283558009*^9, 3.816950314474371*^9}, 3.816950390468425*^9},
+ FontSize->14,
+ CellLabel->"Out[89]=",ExpressionUUID->"0d62d43d-f042-49c5-adab-c534c18dc4c7"]
 }, Open  ]],
 
 Cell[BoxData[""], "Input",
  CellChangeTimes->{{3.81201715905219*^9, 3.812017159052821*^9}},
- CellLabel->"In[9]:=",ExpressionUUID->"68865100-4b02-4731-a2d8-ff80dd11e3d7"]
+ FontSize->14,
+ CellLabel->"In[90]:=",ExpressionUUID->"68865100-4b02-4731-a2d8-ff80dd11e3d7"]
 },
-WindowSize->{808, 716},
-WindowMargins->{{Automatic, 320}, {-106, Automatic}},
+WindowSize->{1112, 716},
+WindowMargins->{{Automatic, 248}, {1, Automatic}},
 FrontEndVersion->"12.1 for Mac OS X x86 (64-bit) (June 19, 2020)",
 StyleDefinitions->"Default.nb",
 ExpressionUUID->"941bf8a7-d17a-4233-90e0-7d0eb1576982"
@@ -221,22 +243,17 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
+Cell[558, 20, 1464, 33, 269, "Input",ExpressionUUID->"9b026a79-262a-45c9-969e-9e5464ac2190"],
+Cell[2025, 55, 1560, 33, 273, "Input",ExpressionUUID->"15469992-236b-4d51-b338-01e5a0e1ab6c"],
 Cell[CellGroupData[{
-Cell[580, 22, 591, 14, 88, "Input",ExpressionUUID->"9b026a79-262a-45c9-969e-9e5464ac2190"],
-Cell[1174, 38, 458, 10, 24, "Message",ExpressionUUID->"abe0f439-f1c0-49e4-bd6f-6df015c23f78"]
-}, Open  ]],
-Cell[1647, 51, 1342, 32, 232, "Input",ExpressionUUID->"15469992-236b-4d51-b338-01e5a0e1ab6c"],
-Cell[CellGroupData[{
-Cell[3014, 87, 2099, 48, 466, "Input",ExpressionUUID->"17e72e2a-df06-43e5-8300-4f16628f8c88"],
-Cell[5116, 137, 480, 11, 24, "Message",ExpressionUUID->"dcbf15dc-119b-4d3c-87ba-fdba3db36fd0"],
-Cell[5599, 150, 387, 9, 24, "Message",ExpressionUUID->"1d36f93f-1ad6-4e85-9cd9-855350e8549b"],
-Cell[5989, 161, 884, 15, 34, "Output",ExpressionUUID->"bb71d87d-aa4a-478e-a08f-03cf11e12b09"]
+Cell[3610, 92, 2150, 48, 251, "Input",ExpressionUUID->"17e72e2a-df06-43e5-8300-4f16628f8c88"],
+Cell[5763, 142, 1691, 39, 59, "Output",ExpressionUUID->"6e90e920-867e-42c0-97e6-f332820755d4"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[6910, 181, 628, 11, 44, "Input",ExpressionUUID->"1d35e5ea-f65c-44b1-b25b-bd2ed3389d92"],
-Cell[7541, 194, 308, 5, 376, "Output",ExpressionUUID->"97fbe90e-d6cc-4129-947e-5f6aec4fdf47"]
+Cell[7491, 186, 644, 12, 47, "Input",ExpressionUUID->"1d35e5ea-f65c-44b1-b25b-bd2ed3389d92"],
+Cell[8138, 200, 1288, 20, 364, "Output",ExpressionUUID->"0d62d43d-f042-49c5-adab-c534c18dc4c7"]
 }, Open  ]],
-Cell[7864, 202, 169, 2, 60, "Input",ExpressionUUID->"68865100-4b02-4731-a2d8-ff80dd11e3d7"]
+Cell[9441, 223, 185, 3, 32, "Input",ExpressionUUID->"68865100-4b02-4731-a2d8-ff80dd11e3d7"]
 }
 ]
 *)

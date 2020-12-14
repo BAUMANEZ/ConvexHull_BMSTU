@@ -1,4 +1,4 @@
-#define FILE_WRITE_PATH "/Users/arsenytokarev/Desktop/coordinates.txt"
+#define FILE_WRITE_PATH "/Users/arsenytokarev/Desktop/ConvexHull_BMSTU/WolframVisualization/coordinates.txt"
 
 #include <iostream>
 #include <fstream>
