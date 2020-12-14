@@ -1,5 +1,5 @@
 #####
-# OS X temporary files that should never be committed
+# OS X temporary files that should never be committed and included
 *.DS_Store
 
 # Xcode
