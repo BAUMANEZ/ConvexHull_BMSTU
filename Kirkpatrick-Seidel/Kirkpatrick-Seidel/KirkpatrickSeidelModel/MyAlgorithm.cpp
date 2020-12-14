@@ -5,10 +5,7 @@
 //  Created by Арсений Токарев on 15.12.2020.
 //
 
-#include<iostream>
-#include<algorithm>
-#include<climits>
-#include <vector>
+
 #include "/Users/arsenytokarev/Desktop/ConvexHull_BMSTU/DataStructures/DataStructures.cpp"
 
 using namespace std;
@@ -46,6 +43,6 @@ public:
 					return a.x < b.x;
 			 }
 		);
-		convexHull = {};
+		convexHullPoints = {};
 	}
 };
