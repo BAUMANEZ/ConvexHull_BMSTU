@@ -22,22 +22,30 @@ private:
 	}
 	
 public:
-	vector<Point> getConvexHullFrom(const vector<Point> &inputPoints) {
+	vector<Point> formConvexHull() {
 		
 		return {};
 	}
 	
+	void saveToTxt() {
+		HandleFiles::writeToFile(FILE_SAVE_PATH_KIRKPATRICK_SEIDEL,
+								 convexHullPoints);
+	}
+	
 private:
 	vector<Point> points;
+	vector<Point> convexHullPoints;
 
 public:
-	KirkpatrickSeidelAlgorithm(const vector<Point> points = vector<Point>()) {
-		this->points = points;
+	KirkpatrickSeidelAlgorithm() {
+		HandleFiles::fillVectorWithPointsFromTxt(FILE_COORDINATES_PATH,
+												 points);
 		sort(this->points.begin(),
 			 this->points.end(),
 			 [](const Point a, const Point b) {
 					return a.x < b.x;
 			 }
 		);
+		convexHull = {};
 	}
 };

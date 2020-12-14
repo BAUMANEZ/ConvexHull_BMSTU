@@ -16,7 +16,7 @@ PointPosition determinePointPosition(const Point& lineStartPoint,
 									 const Point& lineEndPoint,
 									 Point pointToCheck);
 
-Result fill(vector<Point> &convexHullPoints,
+void fill(vector<Point> &convexHullPoints,
 		  const vector<Point> &allPoints);
 
 void writeToFile(const string filePath,
@@ -26,22 +26,17 @@ void writeToFile(const string filePath,
 
 int main(int argc, const char* argv[]) {
 	vector<Point> points;
-	/*  LOAD FROM FILE  */
-	if (HandleFiles::fillVectorWithPointsFromTxt(FILE_COORDINATES_PATH,
-												 points) == isEmpty) {
-		cout << "Could not find the file or read data from it\n";
-		return -1;
-	}
+	
+	/*  LOAD POINTS FROM FILE  */
+	HandleFiles::fillVectorWithPointsFromTxt(FILE_COORDINATES_PATH,
+											 points);
 	
 	/*  FIND CONVEX HULL  */
 	size_t indexOfElementWithMaxXCoord = giveElementWithGreatestXIn(points);
 	swap(points.at(0), points.at(indexOfElementWithMaxXCoord));
 	vector<Point> convexHullPoints;
 	convexHullPoints.push_back(points.at(0));
-	if (fill(convexHullPoints, points) == isEmpty) {
-		cout << "Problem with filling CH Points array\n";
-		return -2;
-	}
+	fill(convexHullPoints, points);
 	
 	/* WRITE CH POINTS TO TXT  */
 	HandleFiles::writeToFile(FILE_SAVE_PATH_BRUTE_FORCE,
@@ -78,10 +73,11 @@ PointPosition determinePointPosition(const Point& lineStartPoint,
 	return positionFromTheLine;
 }
 
-Result fill(vector<Point> &convexHullPoints,
+void fill(vector<Point> &convexHullPoints,
 			const vector<Point> &allPoints) {
 	if (allPoints.empty() || convexHullPoints.empty()) {
-		return isEmpty;
+		cout << "There are no points to form a convex hull!\n";
+		exit(-2);
 	}
 	
 	Point formerPoint = convexHullPoints.back();
@@ -135,5 +131,4 @@ Result fill(vector<Point> &convexHullPoints,
 			i = 0;
 		}
 	}
-	return isFilled;
 }

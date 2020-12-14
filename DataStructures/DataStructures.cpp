@@ -48,8 +48,8 @@ struct PointPair {
 };
 
 struct HandleFiles {
-	static Result fillVectorWithPointsFromTxt(const string &filePath,
-											  vector<Point> &points) {
+	static void fillVectorWithPointsFromTxt(const string &filePath,
+											vector<Point> &points) {
 		size_t numberOfPoints = 0;
 		ifstream file(filePath);
 		if (file.is_open()) {
@@ -62,7 +62,11 @@ struct HandleFiles {
 			}
 			file.close();
 		}
-		return points.empty() ? isEmpty : isFilled;
+		
+		if (points.empty()) {
+			cout << "Could not find the file or read data from it\n";
+			exit(-1);
+		}
 	}
 	
 	static void writeToFile(const string filePath,
@@ -74,6 +78,9 @@ struct HandleFiles {
 		  for (int i = 0; i < convexHullPoints.size(); ++i) {
 			  saveFile << convexHullPoints.at(i).x << " " << convexHullPoints.at(i).y << endl;
 		  }
+	  } else {
+		  cout << "Could not write points to file\n";
+		  exit(-1);
 	  }
   }
 	
