@@ -9,7 +9,7 @@
 #define DataStructures
 
 #define FILE_LOAD_PATH "/Users/arsenytokarev/Desktop/ConvexHull_BMSTU/WolframVisualization/coordinates.txt"
-#define FILE_SAVE_PATH "/Users/arsenytokarev/Desktop/ConvexHull_BMSTU/WolframVisualization/Convex Hull Points (Method I).txt"
+#define FILE_SAVE_PATH_FIRST "/Users/arsenytokarev/Desktop/ConvexHull_BMSTU/WolframVisualization/Convex Hull Points (Method I).txt"
 
 enum Result { isEmpty, isFilled };
 enum PointPosition { oneSide, otherSide, within };
@@ -27,4 +27,6 @@ struct Point {
 		return (coordinate.x == this->x && coordinate.y == this->y);
 	}
 };
+
+
 #endif

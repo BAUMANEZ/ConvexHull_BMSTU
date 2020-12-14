@@ -55,7 +55,7 @@ int main(int argc, const char* argv[]) {
 
 	//writeToFile("/Users/arsenytokarev/Desktop/Vortex/Wolfram/Convex Hull Points (Method I).txt", points);
 	ofstream saveFile;
-	saveFile.open(FILE_SAVE_PATH);
+	saveFile.open(FILE_SAVE_PATH_FIRST);
 	if (saveFile.is_open()) {
 		saveFile << convexHullPoints.size() << endl;
 		for (int i = 0; i < convexHullPoints.size(); ++i) {
