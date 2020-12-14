@@ -1,24 +1,12 @@
-#define FILE_WRITE_PATH "/Users/arsenytokarev/Desktop/ConvexHull_BMSTU/WolframVisualization/coordinates.txt"
 
 #include <iostream>
 #include <fstream>
 #include <vector>
 #include <algorithm>
 #include <string>
+#include "/Users/arsenytokarev/Desktop/ConvexHull_BMSTU/DataStructures/DataStructures.cpp"
 
 using namespace std;
-
-
-struct Point {
-
-	double coordX;
-	double coordY;
-
-	bool operator== (Point coordinate) {
-		return (coordinate.coordX == this->coordX && coordinate.coordY == this->coordY);
-	}
-};
-
 
 template <typename T>
 void checkIfInputIsCorrect(T &value,
@@ -34,7 +22,7 @@ void checkIfInputIsCorrect(T &value,
 int main(int argc,
 		 const char* argv[]) {
 	ofstream writeToTxt;
-	writeToTxt.open(FILE_WRITE_PATH);
+	writeToTxt.open(FILE_LOAD_PATH);
 
 	if (writeToTxt.is_open()) {
 		bool isRandomFilling;
@@ -52,11 +40,11 @@ int main(int argc,
 				double coordY = ((double)(-1 + (rand() % 2) * 2)) * (double)rand() / RAND_MAX * 10000;
 				Point temporaryPoint = { coordX, coordY };
 				while (find(coordinates.begin(), coordinates.end(), temporaryPoint) != coordinates.end()) {
-					temporaryPoint.coordX = ((double)(-1 + (rand() % 2) * 2)) * (double)rand() / RAND_MAX * 10000;
-					temporaryPoint.coordY = ((double)(-1 + (rand() % 2) * 2)) * (double)rand() / RAND_MAX * 10000;
+					temporaryPoint.x = ((double)(-1 + (rand() % 2) * 2)) * (double)rand() / RAND_MAX * 10000;
+					temporaryPoint.y = ((double)(-1 + (rand() % 2) * 2)) * (double)rand() / RAND_MAX * 10000;
 				}
 				coordinates.push_back(temporaryPoint);
-				writeToTxt << temporaryPoint.coordX << " " << temporaryPoint.coordY << endl;
+				writeToTxt << temporaryPoint.x << " " << temporaryPoint.y << endl;
 			}
 
 			return 0;
@@ -72,7 +60,7 @@ int main(int argc,
 			checkIfInputIsCorrect(coordY, "Coordinate Y");
 			const Point temporaryPoint = { coordX, coordY };
 			coordinates.push_back(temporaryPoint);
-			writeToTxt << temporaryPoint.coordX << " " << temporaryPoint.coordY << endl;
+			writeToTxt << temporaryPoint.x << " " << temporaryPoint.y << endl;
 			cout << "\n------------------\n\n";
 		}
 		return 0;
