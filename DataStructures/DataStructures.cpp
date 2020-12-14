@@ -8,9 +8,17 @@
 #ifndef DataStructures
 #define DataStructures
 
-#define FILE_LOAD_PATH "/Users/arsenytokarev/Desktop/ConvexHull_BMSTU/Helpers/Text files/coordinates.txt"
+#define FILE_COORDINATES_PATH "/Users/arsenytokarev/Desktop/ConvexHull_BMSTU/Helpers/Text files/coordinates.txt"
+
 #define FILE_SAVE_PATH_BRUTE_FORCE "/Users/arsenytokarev/Desktop/ConvexHull_BMSTU/Helpers/Text files/ConvexHullPoints(MethodI).txt"
+
 #define FILE_SAVE_PATH_KIRKPATRICK_SEIDEL "/Users/arsenytokarev/Desktop/ConvexHull_BMSTU/Helpers/Text files/ConvexHullPoints(MethodII).txt"
+
+#include <iostream>
+#include <vector>
+#include <string>
+#include <fstream>
+using namespace std;
 
 enum Result { isEmpty, isFilled };
 enum PointPosition { oneSide, otherSide, within };
@@ -30,13 +38,45 @@ struct Point {
 };
 
 struct PointPair {
-	PointPair(Point firstPoint, Point secondPoint) {
+	PointPair(const Point firstPoint, const Point secondPoint) {
 		first = firstPoint;
 		second = secondPoint;
 	}
 	
 	Point first;
 	Point second;
+};
+
+struct HandleFiles {
+	static Result fillVectorWithPointsFromTxt(const string &filePath,
+											  vector<Point> &points) {
+		size_t numberOfPoints = 0;
+		ifstream file(filePath);
+		if (file.is_open()) {
+			file >> numberOfPoints;
+			points.reserve(numberOfPoints);
+
+			double xCoord, yCoord;
+			while (file >> xCoord >> yCoord) {
+				points.push_back(Point(xCoord, yCoord));
+			}
+			file.close();
+		}
+		return points.empty() ? isEmpty : isFilled;
+	}
+	
+	static void writeToFile(const string filePath,
+							const vector<Point> &convexHullPoints) {
+	  ofstream saveFile;
+	  saveFile.open(filePath);
+	  if (saveFile.is_open()) {
+		  saveFile << convexHullPoints.size() << endl;
+		  for (int i = 0; i < convexHullPoints.size(); ++i) {
+			  saveFile << convexHullPoints.at(i).x << " " << convexHullPoints.at(i).y << endl;
+		  }
+	  }
+  }
+	
 };
 
 
