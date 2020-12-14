@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		21ECDE542587BDD800F2797E /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21ECDE532587BDD800F2797E /* main.cpp */; };
-		21ECDE5C2587BDEB00F2797E /* DataStructures.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21ECDE5B2587BDEB00F2797E /* DataStructures.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -26,7 +25,6 @@
 /* Begin PBXFileReference section */
 		21ECDE502587BDD800F2797E /* ConvexHullNonEffectiveAlgorithm */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ConvexHullNonEffectiveAlgorithm; sourceTree = BUILT_PRODUCTS_DIR; };
 		21ECDE532587BDD800F2797E /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
-		21ECDE5B2587BDEB00F2797E /* DataStructures.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DataStructures.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,7 +57,6 @@
 		21ECDE522587BDD800F2797E /* ConvexHullNonEffectiveAlgorithm */ = {
 			isa = PBXGroup;
 			children = (
-				21ECDE5B2587BDEB00F2797E /* DataStructures.cpp */,
 				21ECDE532587BDD800F2797E /* main.cpp */,
 			);
 			path = ConvexHullNonEffectiveAlgorithm;
@@ -122,7 +119,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				21ECDE542587BDD800F2797E /* main.cpp in Sources */,
-				21ECDE5C2587BDEB00F2797E /* DataStructures.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

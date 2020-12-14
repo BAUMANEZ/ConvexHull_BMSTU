@@ -10,7 +10,7 @@
 #include <string>
 #include <fstream>
 #include <algorithm>
-#include "DataStructures.cpp"
+#include "/Users/arsenytokarev/Desktop/ConvexHull_BMSTU/DataStructures/DataStructures.cpp"
 
 using namespace std;
 
@@ -55,7 +55,7 @@ int main(int argc, const char* argv[]) {
 
 	//writeToFile("/Users/arsenytokarev/Desktop/Vortex/Wolfram/Convex Hull Points (Method I).txt", points);
 	ofstream saveFile;
-	saveFile.open(FILE_SAVE_PATH_FIRST);
+	saveFile.open(FILE_SAVE_PATH_BRUTE_FORCE);
 	if (saveFile.is_open()) {
 		saveFile << convexHullPoints.size() << endl;
 		for (int i = 0; i < convexHullPoints.size(); ++i) {

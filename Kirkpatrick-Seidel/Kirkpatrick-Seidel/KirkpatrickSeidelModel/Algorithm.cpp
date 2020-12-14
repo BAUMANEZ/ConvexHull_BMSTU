@@ -5,7 +5,7 @@
 #include<algorithm>
 #include<climits>
 #include <vector>
-#include "/Users/arsenytokarev/Desktop/ConvexHull_BMSTU/ConvexHullNonEffectiveAlgorithm/ConvexHullNonEffectiveAlgorithm/DataStructures.cpp"
+#include "/Users/arsenytokarev/Desktop/ConvexHull_BMSTU/DataStructures/DataStructures.cpp"
 
 using namespace std;
 

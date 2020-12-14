@@ -59,18 +59,18 @@
 		21CB549A2587C5BC00867F01 /* Kirkpatrick-Seidel */ = {
 			isa = PBXGroup;
 			children = (
-				21CB54A32587C5C500867F01 /* Kirkpatrick-Seidel */,
+				21CB54A32587C5C500867F01 /* KirkpatrickSeidelModel */,
 				21CB549B2587C5BC00867F01 /* main.cpp */,
 			);
 			path = "Kirkpatrick-Seidel";
 			sourceTree = "<group>";
 		};
-		21CB54A32587C5C500867F01 /* Kirkpatrick-Seidel */ = {
+		21CB54A32587C5C500867F01 /* KirkpatrickSeidelModel */ = {
 			isa = PBXGroup;
 			children = (
 				21CB54A82587C6D900867F01 /* Algorithm.cpp */,
 			);
-			path = "Kirkpatrick-Seidel";
+			path = KirkpatrickSeidelModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
