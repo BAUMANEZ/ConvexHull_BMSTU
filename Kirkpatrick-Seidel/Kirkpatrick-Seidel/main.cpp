@@ -8,8 +8,6 @@
 #include "KirkpatrickSeidelModel/MyAlgorithm.cpp"
 
 int main(int argc, const char *argv[]) {
-	KirkpatrickSeidelAlgorithm result = {};
-	result.formConvexHull();
-	result.saveToTxt();
+	KirkpatrickSeidelAlgorithm().run();
 	return 0;
 }

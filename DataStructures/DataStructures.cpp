@@ -18,33 +18,37 @@
 #include <vector>
 #include <string>
 #include <fstream>
+#include <uuid/uuid.h>
 using namespace std;
 
 enum Result { isEmpty, isFilled };
 enum PointPosition { oneSide, otherSide, within };
 
 struct Point {
-	Point(double coordX = 0.0, double coordY = 0.0) {
-		x = coordX;
-		y = coordY;
-	}
-	
 	double x;
 	double y;
 	
 	bool operator== (const Point& coordinate) const {
 		return (coordinate.x == this->x && coordinate.y == this->y);
 	}
+	
+	Point(double coordX = 0.0, double coordY = 0.0) {
+		x = coordX;
+		y = coordY;
+	}
 };
 
 struct PointPair {
+public:
+	Point first;
+	Point second;
+	
+	
+	
 	PointPair(const Point firstPoint, const Point secondPoint) {
 		first = firstPoint;
 		second = secondPoint;
 	}
-	
-	Point first;
-	Point second;
 };
 
 struct HandleFiles {
