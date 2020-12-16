@@ -26,12 +26,7 @@ private:
 		const size_t numberOfValues = values.size();
 		switch (numberOfValues % 2) {
 			case 0:
-				{
-//					double sumOfValues = 0;
-//					for (auto &value : values) sumOfValues += value;
-//					return sumOfValues / 2;
-					return (values[numberOfValues / 2] + values[numberOfValues / 2 - 1]) / 2;
-				}
+				return (values[numberOfValues / 2] + values[numberOfValues / 2 - 1]) / 2;
 			default:
 				return values.at(numberOfValues / 2);
 		}
@@ -57,9 +52,13 @@ private:
 	}
 	
 	
-	tuple<vector<PointPair>, vector<PointPair>, vector<PointPair>> getSlopeCharacterPairs(const vector<double> &slopes,
-																						  const vector<PointPair> pointPairs,
-																						  const double medianSlope) {
+	tuple<
+		vector<PointPair>,
+		vector<PointPair>,
+		vector<PointPair>
+	> getSlopeCharacterPairs(const vector<double> &slopes,
+							 const vector<PointPair> pointPairs,
+							 const double medianSlope) {
 		if (slopes.size() != pointPairs.size()) exit(-4);
 		vector<PointPair> smallPairs {}, equalPairs {}, largePairs {};
 		for (int i = 0; i < pointPairs.size(); ++i) {
@@ -156,7 +155,7 @@ private:
 //			}
 //		}
 		
-		const PointPair maximizingPointPair = PointPair(maximizingMin, maximizingMax); 
+		const PointPair maximizingPointPair = PointPair(maximizingMin, maximizingMax);
 		
 		if (maximizingPointPair.first.x <= medianX && maximizingPointPair.second.x > medianX) {
 			return maximizingPointPair;
@@ -211,29 +210,33 @@ private:
 		return result;
 	}
 	
-	void formConvexHull(const vector<Point> &setOfPoints) {
+	void getUpperHull(const vector<Point> &setOfPoints) {
 		const double medianX = getMedianIn(getXCoordinates());
-		const auto upperBridge = getUpperBridge(points, medianX);
+		auto upperBridge = getUpperBridge(points, medianX);
+		
+		if(upperBridge.first.x > upperBridge.second.x)
+			swap(upperBridge.first, upperBridge.second);
+		
 		vector<Point> leftSetOfPoints {upperBridge.first};
-		for (auto &point : points) {
+		for (auto &point : setOfPoints) {
 			if (point.x < upperBridge.first.x) leftSetOfPoints.push_back(point);
 		}
 		
 		vector<Point> rightSetOfPoints {upperBridge.second};
-		for (auto &point : points) {
+		for (auto &point : setOfPoints) {
 			if (point.x > upperBridge.first.x) leftSetOfPoints.push_back(point);
 		}
 		
-		if (upperBridge.first == *points.begin()) {
+		if (upperBridge.first == *setOfPoints.begin()) {
 			convexHullPoints.push_back(upperBridge.first);
 		} else {
-			formConvexHull(leftSetOfPoints);
+			getUpperHull(leftSetOfPoints);
 		}
 		
-		if (upperBridge.second == *(points.end() - 1)) {
+		if (upperBridge.second == *(setOfPoints.end() - 1)) {
 			convexHullPoints.push_back(upperBridge.second);
 		} else {
-			formConvexHull(rightSetOfPoints);
+			getUpperHull(rightSetOfPoints);
 		}
 		
 	}
@@ -245,7 +248,7 @@ private:
 	
 public:
 	void run() {
-		formConvexHull(points);
+		getUpperHull(points);
 		saveToTxt();
 	}
 	
