@@ -109,8 +109,8 @@ private:
 		
 		const auto slopes = calculateSlopes(pointPairs,
 											candidates);
-		if(slopes.size() == 0 )
-			return getUpperBridge(candidates, medianX);
+//		if(slopes.size() == 0 )
+//			return getUpperBridge(candidates, medianX);
 		
 		const double medianSlope = getMedianIn(slopes);
 		
@@ -195,7 +195,7 @@ private:
 	}
 	
 	vector<double> getXCoordinatesIn(const vector<Point> &points) {
-		vector<double> result(points.size());
+		vector<double> result {};
 		for (auto &point : points) result.push_back(point.x);
 		return result;
 	}
@@ -205,7 +205,12 @@ private:
 				 const vector<Point> &setOfPoints) {
 		
 		const double medianX = getMedianIn(getXCoordinatesIn(setOfPoints));
-		auto upperBridge = getUpperBridge(points, medianX);
+		auto upperBridge = getUpperBridge(setOfPoints, medianX);
+		if (upperBridge.first.x > upperBridge.second.x) {
+			const Point tempPoint = upperBridge.first;
+			upperBridge.first = upperBridge.second;
+			upperBridge.second = tempPoint;
+		}
 		
 		vector<Point> leftSetOfPoints { upperBridge.first };
 		for (auto &point : setOfPoints) {
