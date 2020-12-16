@@ -8,6 +8,8 @@
 #include <type_traits>
 #include <tuple>
 
+#define EPS 0.000001
+
 using namespace std;
 
 class KirkpatrickSeidelAlgorithm {
@@ -34,21 +36,25 @@ private:
 		}
 	}
 	
-	vector<PointPair> getVectorOfPointPairsFrom(const vector<Point> &setOfPoints) {
-		vector<PointPair> pointPairs {};
-		if (setOfPoints.size() < 2) {
-			return {};
-		}
+	vector<PointPair> makePointPairs(const vector<Point> &setOfPoints,
+									 vector<Point> &candidates) {
 		
-		for (auto iterator = setOfPoints.begin();
-			 iterator < setOfPoints.end() - 1;
-			 ++iterator) {
+		vector<PointPair> pointPairs {};
+		size_t startIndex = 0;
+		if (setOfPoints.size() % 2 != 0) {
+			candidates.push_back(*(setOfPoints.begin()));
+			startIndex = 1;
+		}
+		for (auto iterator = setOfPoints.begin() + startIndex;
+			 iterator < setOfPoints.end();
+			 iterator += 2) {
 			pointPairs.push_back(PointPair(*iterator,
 										   *(iterator + 1)));
 		}
 		
 		return pointPairs;
 	}
+	
 	
 	tuple<vector<PointPair>, vector<PointPair>, vector<PointPair>> getSlopeCharacterPairs(const vector<double> &slopes,
 																						  const vector<PointPair> pointPairs,
@@ -64,7 +70,7 @@ private:
 			else if (slope > medianSlope) {
 				largePairs.push_back(pointPair);
 			}
-			else {
+			else if (abs(slope - medianSlope) < EPS){
 				equalPairs.push_back(pointPair);
 			}
 		}
@@ -73,7 +79,7 @@ private:
 	
 	vector<double> calculateSlopes(vector<PointPair> &pointPairs,
 								   vector<Point> &candidates) {
-		vector<double> slopes;
+		vector<double> slopes {};
 		for (auto iterator = pointPairs.begin();
 			 iterator < pointPairs.end();
 			 ++iterator) {
@@ -92,14 +98,15 @@ private:
 	PointPair getUpperBridge(const vector<Point> &setOfPoints,
 						     double medianX) {
 		vector<Point> candidates {};
-		const double setCapacity = setOfPoints.size();
+		const size_t setCapacity = setOfPoints.size();
 		
 		if (setCapacity == 2) {
 			return PointPair(setOfPoints.at(0),
 							 setOfPoints.at(1));
 		}
 		
-		vector<PointPair> pointPairs = getVectorOfPointPairsFrom(setOfPoints);
+		vector<PointPair> pointPairs = makePointPairs(setOfPoints, candidates);
+		
 		
 		const auto slopes = calculateSlopes(pointPairs,
 											candidates);
@@ -109,7 +116,33 @@ private:
 		const auto [smallPairs, equalPairs, largePairs] = getSlopeCharacterPairs(slopes,
 																				 pointPairs,
 																				 medianSlope);
-		const PointPair maximizingPointPair = PointPair(Point(), Point()); //.....>!! ekfdas fhshjsh
+		
+		double h = INT_MIN;
+		for(auto iterator = points.begin();
+			iterator < points.end();
+			++iterator) {
+			const Point currentPoint = *iterator;
+			const double currentH = (currentPoint.y - medianSlope * currentPoint.x);
+			if (currentH > h)
+				h = currentH;
+		 }
+		
+		Point maximizingMin = Point(INT_MAX, INT_MAX), maximizingMax = Point(INT_MIN, INT_MIN);
+		for(auto iterator = points.begin();
+			iterator < points.end();
+			++iterator) {
+			const Point currentPoint = *iterator;
+			const double currentH = (currentPoint.y - medianSlope * currentPoint.x);
+			if (abs(currentH - h) < EPS) {
+				if (currentPoint.x < maximizingMin.x)
+					maximizingMin = currentPoint;
+				
+				if (currentPoint.x > maximizingMax.x)
+					maximizingMax = currentPoint;
+			}
+		}
+		
+		const PointPair maximizingPointPair = PointPair(maximizingMin, maximizingMax); 
 		
 		if (maximizingPointPair.first.x <= medianX && maximizingPointPair.second.x > medianX) {
 			return maximizingPointPair;
