@@ -8,7 +8,7 @@
 #include <type_traits>
 #include <tuple>
 
-#define EPS 0.000001
+#define EPS 0.001
 
 using namespace std;
 
@@ -27,9 +27,10 @@ private:
 		switch (numberOfValues % 2) {
 			case 0:
 				{
-					double sumOfValues = 0;
-					for (auto &value : values) sumOfValues += value;
-					return sumOfValues / 2;
+//					double sumOfValues = 0;
+//					for (auto &value : values) sumOfValues += value;
+//					return sumOfValues / 2;
+					return (values[numberOfValues / 2] + values[numberOfValues / 2 - 1]) / 2;
 				}
 			default:
 				return values.at(numberOfValues / 2);
@@ -110,6 +111,9 @@ private:
 		
 		const auto slopes = calculateSlopes(pointPairs,
 											candidates);
+		if(slopes.size() == 0 )
+			return getUpperBridge(candidates, medianX);
+		
 		const double medianSlope = getMedianIn(slopes);
 		
 		// C++17 and higher!!!
@@ -117,30 +121,40 @@ private:
 																				 pointPairs,
 																				 medianSlope);
 		
-		double h = INT_MIN;
-		for(auto iterator = points.begin();
-			iterator < points.end();
-			++iterator) {
-			const Point currentPoint = *iterator;
-			const double currentH = (currentPoint.y - medianSlope * currentPoint.x);
-			if (currentH > h)
-				h = currentH;
-		 }
-		
-		Point maximizingMin = Point(INT_MAX, INT_MAX), maximizingMax = Point(INT_MIN, INT_MIN);
-		for(auto iterator = points.begin();
-			iterator < points.end();
-			++iterator) {
-			const Point currentPoint = *iterator;
-			const double currentH = (currentPoint.y - medianSlope * currentPoint.x);
-			if (abs(currentH - h) < EPS) {
-				if (currentPoint.x < maximizingMin.x)
-					maximizingMin = currentPoint;
-				
-				if (currentPoint.x > maximizingMax.x)
-					maximizingMax = currentPoint;
+		double height = INT_MIN;
+		vector<Point> max;
+		for(auto &currentPoint: points) {
+			const double currentHeight = (currentPoint.y - medianSlope * currentPoint.x);
+			if (currentHeight > height) {
+				max.clear();
+				max.push_back(currentPoint);
+				height = currentHeight;
 			}
-		}
+			else if (abs(currentHeight - height) <= EPS) {
+				max.push_back(currentPoint);
+			}
+		 }
+		sort(max.begin(),
+			 max.end(),
+			 [](const Point a, const Point b) {
+					return a.x < b.x;
+			 }
+		);
+		
+		Point maximizingMin = *(max.begin()), maximizingMax = *(max.end() -1);
+//		for (auto iterator = points.begin();
+//			 iterator < points.end();
+//			 ++iterator) {
+//			const Point currentPoint = *iterator;
+//			const double currentH = (currentPoint.y - medianSlope * currentPoint.x);
+//			if (abs(currentH - h) < EPS) {
+//				if (currentPoint.x < maximizingMin.x)
+//					maximizingMin = currentPoint;
+//
+//				if (currentPoint.x > maximizingMax.x)
+//					maximizingMax = currentPoint;
+//			}
+//		}
 		
 		const PointPair maximizingPointPair = PointPair(maximizingMin, maximizingMax); 
 		
