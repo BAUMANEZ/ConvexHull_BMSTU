@@ -5,7 +5,6 @@
 //  Created by Арсений Токарев on 15.12.2020.
 //
 #include "/Users/arsenytokarev/Desktop/ConvexHull_BMSTU/DataStructures/DataStructures.cpp"
-#include <type_traits>
 #include <tuple>
 
 #define EPS 0.001
@@ -141,19 +140,6 @@ private:
 		);
 		
 		Point maximizingMin = *(max.begin()), maximizingMax = *(max.end() -1);
-//		for (auto iterator = points.begin();
-//			 iterator < points.end();
-//			 ++iterator) {
-//			const Point currentPoint = *iterator;
-//			const double currentH = (currentPoint.y - medianSlope * currentPoint.x);
-//			if (abs(currentH - h) < EPS) {
-//				if (currentPoint.x < maximizingMin.x)
-//					maximizingMin = currentPoint;
-//
-//				if (currentPoint.x > maximizingMax.x)
-//					maximizingMax = currentPoint;
-//			}
-//		}
 		
 		const PointPair maximizingPointPair = PointPair(maximizingMin, maximizingMax);
 		
@@ -171,7 +157,9 @@ private:
 									  equalPairs.begin(),
 									  equalPairs.end());
 			
-			for (auto &pointPair : largeAndEqualPairs) candidates.push_back(pointPair.second);
+			for (auto &pointPair : largeAndEqualPairs)
+				candidates.push_back(pointPair.second);
+			
 			for (auto &pointPair : smallPairs) {
 				candidates.push_back(pointPair.first);
 				candidates.push_back(pointPair.second);
@@ -188,7 +176,9 @@ private:
 									  equalPairs.begin(),
 									  equalPairs.end());
 			
-			for (auto &pointPair : smallAndEqualPairs) candidates.push_back(pointPair.first);
+			for (auto &pointPair : smallAndEqualPairs)
+				candidates.push_back(pointPair.first);
+			
 			for (auto &pointPair : largePairs) {
 				candidates.push_back(pointPair.first);
 				candidates.push_back(pointPair.second);
@@ -204,41 +194,84 @@ private:
 		return getUpperBridge(candidates, medianX);
 	}
 	
-	vector<double> getXCoordinates() {
+	vector<double> getXCoordinatesIn(const vector<Point> &points) {
 		vector<double> result(points.size());
 		for (auto &point : points) result.push_back(point.x);
 		return result;
 	}
 	
-	void getUpperHull(const vector<Point> &setOfPoints) {
-		const double medianX = getMedianIn(getXCoordinates());
+	void connect(const Point &firstPoint,
+				 const Point &secondPoint,
+				 const vector<Point> &setOfPoints) {
+		
+		const double medianX = getMedianIn(getXCoordinatesIn(setOfPoints));
 		auto upperBridge = getUpperBridge(points, medianX);
 		
-		if(upperBridge.first.x > upperBridge.second.x)
-			swap(upperBridge.first, upperBridge.second);
-		
-		vector<Point> leftSetOfPoints {upperBridge.first};
+		vector<Point> leftSetOfPoints { upperBridge.first };
 		for (auto &point : setOfPoints) {
-			if (point.x < upperBridge.first.x) leftSetOfPoints.push_back(point);
+			if (point.x < upperBridge.first.x)
+				leftSetOfPoints.push_back(point);
+		}
+
+		vector<Point> rightSetOfPoints { upperBridge.second };
+		for (auto &point : setOfPoints) {
+			if (point.x > upperBridge.second.x)
+				rightSetOfPoints.push_back(point);
 		}
 		
-		vector<Point> rightSetOfPoints {upperBridge.second};
-		for (auto &point : setOfPoints) {
-			if (point.x > upperBridge.first.x) leftSetOfPoints.push_back(point);
-		}
-		
-		if (upperBridge.first == *setOfPoints.begin()) {
+		if (upperBridge.first == firstPoint) {
 			convexHullPoints.push_back(upperBridge.first);
 		} else {
-			getUpperHull(leftSetOfPoints);
+			connect(firstPoint, upperBridge.first, leftSetOfPoints);
 		}
-		
-		if (upperBridge.second == *(setOfPoints.end() - 1)) {
+
+		if (upperBridge.second == secondPoint) {
 			convexHullPoints.push_back(upperBridge.second);
 		} else {
-			getUpperHull(rightSetOfPoints);
+			connect(upperBridge.second, secondPoint, rightSetOfPoints);
+		}
+	}
+	
+	void getUpperHull(vector<Point> &setOfPoints) {
+		Point minPoint = Point(INT_MAX, INT_MAX);
+		Point maxPoint = Point(INT_MIN, INT_MIN);
+		
+		for (auto &point : setOfPoints) {
+			if (point.x == minPoint.x) {
+				if (point.y >= minPoint.y) {
+					minPoint = point;
+				}
+			}
+			else {
+				if(point.x <= minPoint.x) {
+					minPoint = point;
+				}
+			}
+			
+			if (point.x == maxPoint.x) {
+				if (point.y >= maxPoint.y) {
+					maxPoint = point;
+				}
+			}
+			else {
+				if(point.x >= maxPoint.x) {
+					maxPoint = point;
+				}
+			}
 		}
 		
+		if (minPoint == maxPoint) {
+			convexHullPoints.push_back(minPoint);
+			return;
+		}
+		vector<Point> t { minPoint };
+		for (auto &point : setOfPoints ) {
+			if (point.x > minPoint.x && point.x < maxPoint.y)
+				t.push_back(point);
+		}
+		t.push_back(maxPoint);
+		
+		connect(minPoint, maxPoint, t);
 	}
 	
 	void saveToTxt() {
