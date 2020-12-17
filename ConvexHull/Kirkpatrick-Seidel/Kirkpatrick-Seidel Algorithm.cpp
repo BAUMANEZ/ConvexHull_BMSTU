@@ -48,7 +48,7 @@ private:
 		vector<PointPair> pointPairs {};
 		size_t startIndex = 0;
 		if (setOfPoints.size() % 2 != 0) {
-			candidates.push_back(*(setOfPoints.begin()));
+			candidates.push_back(*(setOfPoints.begin()++));
 			startIndex = 1;
 		}
 		for (auto iterator = setOfPoints.begin() + startIndex;
@@ -60,7 +60,6 @@ private:
 		
 		return pointPairs;
 	}
-	
 	
 	tuple<
 		vector<PointPair>,
@@ -113,11 +112,12 @@ private:
 											   const vector<PointPair> &largePairs,
 											   const vector<PointPair> &equalPairs,
 											   const vector<PointPair> &smallPairs,
+											   const vector<Point> &remainingPoints,
 											   vector<Point> &candidates) {
 		
 		double height = INT_MIN;
 		vector<Point> pointsOnTheMaximizedLine;
-		for(auto &currentPoint: points) {
+		for(auto &currentPoint: remainingPoints) {
 			const double currentHeight = (currentPoint.y - medianSlope * currentPoint.x);
 			if (currentHeight > height) {
 				pointsOnTheMaximizedLine.clear();
@@ -183,10 +183,11 @@ private:
 											   const vector<PointPair> &largePairs,
 											   const vector<PointPair> &equalPairs,
 											   const vector<PointPair> &smallPairs,
+											   const vector<Point> &remainingPoints,
 											   vector<Point> &candidates) {
 		double height = INT_MAX;
 		vector<Point> pointsOnTheMaximizedLine;
-		for(auto &currentPoint: points) {
+		for(auto &currentPoint: remainingPoints) {
 			const double currentHeight = (currentPoint.y - medianSlope * currentPoint.x);
 			if (currentHeight < height) {
 				pointsOnTheMaximizedLine.clear();
@@ -249,7 +250,7 @@ private:
 		
 	}
 	
-	PointPair getBridge(const vector<Point> &remainingPoints,
+	PointPair getBridge(vector<Point> &remainingPoints,
 						double medianX,
 						bool isUpperBridge) {
 		vector<Point> candidates {};
@@ -276,6 +277,7 @@ private:
 																	largePairs,
 																	equalPairs,
 																	smallPairs,
+																    remainingPoints,
 																	candidates)
 		 :
 											  continueForLowerBridge(medianX,
@@ -283,6 +285,7 @@ private:
 																	 largePairs,
 																	 equalPairs,
 																	 smallPairs,
+																	 remainingPoints,
 																	 candidates);
 		if (const auto bridge = result) {
 			return bridge.value();
@@ -301,7 +304,6 @@ private:
 				 const Point &firstPoint,
 				 const Point &secondPoint,
 				 vector<Point> &setOfPoints) {
-		
 		sortXCoordinatesIn(setOfPoints);
 		const double medianX = getMedianIn(getXCoordinatesIn(setOfPoints));
 		auto bridge = getBridge(setOfPoints, medianX, isUpperHull);
@@ -323,17 +325,15 @@ private:
 				rightSetOfPoints.push_back(point);
 		}
 		
-		if (bridge.first == firstPoint) {
+		if (bridge.first == firstPoint)
 			convexHullPoints.push_back(bridge.first);
-		} else {
+		else
 			connect(isUpperHull, firstPoint, bridge.first, leftSetOfPoints);
-		}
 
-		if (bridge.second == secondPoint) {
+		if (bridge.second == secondPoint)
 			convexHullPoints.push_back(bridge.second);
-		} else {
+		else
 			connect(isUpperHull, bridge.second, secondPoint, rightSetOfPoints);
-		}
 	}
 	
 	void getPartOfHull(bool isUpperHull,

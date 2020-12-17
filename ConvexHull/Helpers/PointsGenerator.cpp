@@ -13,14 +13,14 @@ template <typename T>
 void checkIfInputIsCorrect(T &value,
 						   const string &message) {
 	while (cout << message << "\n>> " && !(cin >> value)) {
-		cin.clear(); //clear bad input flag
-		cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //discard input
+		cin.clear();
+		cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 		cout << "Invalid input; press ENTER to try again.\n";
 		cin.get();
 	}
 }
 
-void generateFiles() {
+void generatePoints() {
 	ofstream writeToTxt;
 	writeToTxt.open(FILE_COORDINATES_PATH);
 

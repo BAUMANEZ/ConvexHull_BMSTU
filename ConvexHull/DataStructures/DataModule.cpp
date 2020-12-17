@@ -23,5 +23,4 @@ using namespace std;
 enum Result { isEmpty, isFilled };
 enum PointPosition { oneSide, otherSide, within };
 
-
 #endif

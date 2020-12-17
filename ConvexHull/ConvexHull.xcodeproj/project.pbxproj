@@ -14,6 +14,7 @@
 		21A17CA0258BE1E300234D4D /* HandleFiles.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21A17C9F258BE1E300234D4D /* HandleFiles.cpp */; };
 		21A17CA4258BE32700234D4D /* Kirkpatrick-Seidel Algorithm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21A17CA3258BE32700234D4D /* Kirkpatrick-Seidel Algorithm.cpp */; };
 		21A17CA9258BE41700234D4D /* PointsGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21A17CA8258BE41700234D4D /* PointsGenerator.cpp */; };
+		21A17CAC258BE67F00234D4D /* NonEffectiveAlgorithm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21A17CAB258BE67F00234D4D /* NonEffectiveAlgorithm.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -37,6 +38,7 @@
 		21A17C9F258BE1E300234D4D /* HandleFiles.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = HandleFiles.cpp; sourceTree = "<group>"; };
 		21A17CA3258BE32700234D4D /* Kirkpatrick-Seidel Algorithm.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = "Kirkpatrick-Seidel Algorithm.cpp"; sourceTree = "<group>"; };
 		21A17CA8258BE41700234D4D /* PointsGenerator.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PointsGenerator.cpp; sourceTree = "<group>"; };
+		21A17CAB258BE67F00234D4D /* NonEffectiveAlgorithm.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NonEffectiveAlgorithm.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +55,7 @@
 		21A17C7F258BE08300234D4D = {
 			isa = PBXGroup;
 			children = (
+				21A17CAE258BE68500234D4D /* NonEffectiveAlgorithm */,
 				21A17CA7258BE40900234D4D /* Helpers */,
 				21A17CA2258BE31300234D4D /* Kirkpatrick-Seidel */,
 				21A17C93258BE0AF00234D4D /* DataStructures */,
@@ -102,6 +105,14 @@
 				21A17CA8258BE41700234D4D /* PointsGenerator.cpp */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		21A17CAE258BE68500234D4D /* NonEffectiveAlgorithm */ = {
+			isa = PBXGroup;
+			children = (
+				21A17CAB258BE67F00234D4D /* NonEffectiveAlgorithm.cpp */,
+			);
+			path = NonEffectiveAlgorithm;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -165,6 +176,7 @@
 				21A17CA0258BE1E300234D4D /* HandleFiles.cpp in Sources */,
 				21A17CA4258BE32700234D4D /* Kirkpatrick-Seidel Algorithm.cpp in Sources */,
 				21A17C98258BE0EC00234D4D /* DataModule.cpp in Sources */,
+				21A17CAC258BE67F00234D4D /* NonEffectiveAlgorithm.cpp in Sources */,
 				21A17C95258BE0C500234D4D /* Point.cpp in Sources */,
 				21A17C8C258BE08300234D4D /* main.cpp in Sources */,
 			);
