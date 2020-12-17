@@ -7,7 +7,7 @@
 #include "/Users/arsenytokarev/Desktop/ConvexHull_BMSTU/DataStructures/DataStructures.cpp"
 #include <tuple>
 
-#define EPS 0.001
+#define EPS 0.000001
 
 using namespace std;
 
@@ -109,8 +109,6 @@ private:
 		
 		const auto slopes = calculateSlopes(pointPairs,
 											candidates);
-//		if(slopes.size() == 0 )
-//			return getUpperBridge(candidates, medianX);
 		
 		const double medianSlope = getMedianIn(slopes);
 		
@@ -139,7 +137,8 @@ private:
 			 }
 		);
 		
-		Point maximizingMin = *(max.begin()), maximizingMax = *(max.end() -1);
+		Point maximizingMin = *(max.begin()),
+			  maximizingMax = *(max.end() -1);
 		
 		const PointPair maximizingPointPair = PointPair(maximizingMin, maximizingMax);
 		
@@ -271,7 +270,7 @@ private:
 		}
 		vector<Point> t { minPoint };
 		for (auto &point : setOfPoints ) {
-			if (point.x > minPoint.x && point.x < maxPoint.y)
+			if (point.x > minPoint.x && point.x < maxPoint.x)
 				t.push_back(point);
 		}
 		t.push_back(maxPoint);
