@@ -11,3 +11,4 @@ int main(int argc, const char *argv[]) {
 	KirkpatrickSeidelAlgorithm().run();
 	return 0;
 }
+
