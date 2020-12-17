@@ -7,7 +7,7 @@
 #include "/Users/arsenytokarev/Desktop/ConvexHull_BMSTU/DataStructures/DataStructures.cpp"
 #include <tuple>
 
-#define EPS 0.000001
+#define EPS 10e-6
 
 using namespace std;
 
@@ -69,7 +69,7 @@ private:
 			else if (slope > medianSlope) {
 				largePairs.push_back(pointPair);
 			}
-			else if (abs(slope - medianSlope) < EPS){
+			else if (abs(slope - medianSlope) <= EPS){
 				equalPairs.push_back(pointPair);
 			}
 		}
