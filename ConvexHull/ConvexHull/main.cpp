@@ -1,14 +1,13 @@
 //
 //  main.cpp
-//  ConvexHull
+//  Kirkpatrick-Seidel
 //
-//  Created by Арсений Токарев on 17.12.2020.
+//  Created by Арсений Токарев on 14.12.2020.
 //
+#include "../Kirkpatrick-Seidel/Kirkpatrick-Seidel Algorithm.cpp"
 
-#include <iostream>
-
-int main(int argc, const char * argv[]) {
-	// insert code here...
-	std::cout << "Hello, World!\n";
+int main(int argc, const char *argv[]) {
+	KirkpatrickSeidelAlgorithm().run();
 	return 0;
 }
+
