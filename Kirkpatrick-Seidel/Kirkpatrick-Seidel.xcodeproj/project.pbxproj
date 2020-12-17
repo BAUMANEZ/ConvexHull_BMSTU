@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		21A9BA6825880E7900F9CB60 /* MyAlgorithm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21A9BA6725880E7900F9CB60 /* MyAlgorithm.cpp */; };
 		21CB549C2587C5BC00867F01 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21CB549B2587C5BC00867F01 /* main.cpp */; };
-		21CB54A92587C6D900867F01 /* Algorithm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21CB54A82587C6D900867F01 /* Algorithm.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -28,7 +27,6 @@
 		21A9BA6725880E7900F9CB60 /* MyAlgorithm.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MyAlgorithm.cpp; sourceTree = "<group>"; };
 		21CB54982587C5BC00867F01 /* Kirkpatrick-Seidel */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Kirkpatrick-Seidel"; sourceTree = BUILT_PRODUCTS_DIR; };
 		21CB549B2587C5BC00867F01 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
-		21CB54A82587C6D900867F01 /* Algorithm.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Algorithm.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,7 +68,6 @@
 		21CB54A32587C5C500867F01 /* KirkpatrickSeidelModel */ = {
 			isa = PBXGroup;
 			children = (
-				21CB54A82587C6D900867F01 /* Algorithm.cpp */,
 				21A9BA6725880E7900F9CB60 /* MyAlgorithm.cpp */,
 			);
 			path = KirkpatrickSeidelModel;
@@ -134,7 +131,6 @@
 			files = (
 				21A9BA6825880E7900F9CB60 /* MyAlgorithm.cpp in Sources */,
 				21CB549C2587C5BC00867F01 /* main.cpp in Sources */,
-				21CB54A92587C6D900867F01 /* Algorithm.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

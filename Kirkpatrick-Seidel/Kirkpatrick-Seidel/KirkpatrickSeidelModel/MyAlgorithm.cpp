@@ -56,9 +56,12 @@ private:
 		vector<PointPair>,
 		vector<PointPair>
 	> getSlopeCharacterPairs(const vector<double> &slopes,
-							 const vector<PointPair> pointPairs,
+							 const vector<PointPair> &pointPairs,
 							 const double medianSlope) {
-		if (slopes.size() != pointPairs.size()) exit(-4);
+		if (slopes.size() != pointPairs.size()) {
+			cout << "Slopes.size != pointPairs.size" << endl;
+			exit(-4);
+		}
 		vector<PointPair> smallPairs {}, equalPairs {}, largePairs {};
 		for (int i = 0; i < pointPairs.size(); ++i) {
 			const double slope = slopes.at(i);
@@ -84,8 +87,8 @@ private:
 			 ++iterator) {
 			const auto pair = *iterator;
 			if (pair.first.x == pair.second.x) {
+				pointPairs.erase(iterator--);
 				candidates.push_back(pair.first.y > pair.second.y ? pair.first : pair.second);
-				pointPairs.erase(iterator);
 			} else {
 				const double slope = (pair.first.y - pair.second.y) / (pair.first.x - pair.second.x);
 				slopes.push_back(slope);
@@ -138,7 +141,7 @@ private:
 		);
 		
 		Point maximizingMin = *(max.begin()),
-			  maximizingMax = *(max.end() -1);
+			  maximizingMax = *(max.end() - 1);
 		
 		const PointPair maximizingPointPair = PointPair(maximizingMin, maximizingMax);
 		
@@ -201,7 +204,11 @@ private:
 	
 	void connect(const Point &firstPoint,
 				 const Point &secondPoint,
-				 const vector<Point> &setOfPoints) {
+				 vector<Point> &setOfPoints) {
+		
+		sort(setOfPoints.begin(), setOfPoints.end(), [](const Point a, const Point b) {
+			return a.x < b.x;
+		   });
 		
 		const double medianX = getMedianIn(getXCoordinatesIn(setOfPoints));
 		auto upperBridge = getUpperBridge(setOfPoints, medianX);
