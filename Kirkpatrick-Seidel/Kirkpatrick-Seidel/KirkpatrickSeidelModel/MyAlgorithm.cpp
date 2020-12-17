@@ -6,6 +6,7 @@
 //
 #include "/Users/arsenytokarev/Desktop/ConvexHull_BMSTU/DataStructures/DataStructures.cpp"
 #include <tuple>
+#include <optional>
 
 #define EPS 10e-6
 
@@ -15,6 +16,16 @@ class KirkpatrickSeidelAlgorithm {
 private:
 	vector<Point> points;
 	vector<Point> convexHullPoints;
+	
+	
+	void sortXCoordinatesIn(vector<Point> &pointsToBeSorted) {
+		sort(pointsToBeSorted.begin(),
+			 pointsToBeSorted.end(),
+			 [](const Point a, const Point b) {
+					return a.x < b.x;
+			 }
+		);
+	}
 	
 	template<
 		typename T,
@@ -97,59 +108,37 @@ private:
 		return slopes;
 	}
 	
-	PointPair getUpperBridge(const vector<Point> &setOfPoints,
-						     double medianX) {
-		vector<Point> candidates {};
-		const size_t setCapacity = setOfPoints.size();
-		
-		if (setCapacity == 2) {
-			return PointPair(setOfPoints.at(0),
-							 setOfPoints.at(1));
-		}
-		
-		vector<PointPair> pointPairs = makePointPairs(setOfPoints, candidates);
-		
-		
-		const auto slopes = calculateSlopes(pointPairs,
-											candidates);
-		
-		const double medianSlope = getMedianIn(slopes);
-		
-		// C++17 and higher!!!
-		const auto [smallPairs, equalPairs, largePairs] = getSlopeCharacterPairs(slopes,
-																				 pointPairs,
-																				 medianSlope);
+	optional<PointPair> continueForUpperBridge(const double medianX,
+											   const double medianSlope,
+											   const vector<PointPair> &largePairs,
+											   const vector<PointPair> &equalPairs,
+											   const vector<PointPair> &smallPairs,
+											   vector<Point> &candidates) {
 		
 		double height = INT_MIN;
-		vector<Point> max;
+		vector<Point> pointsOnTheMaximizedLine;
 		for(auto &currentPoint: points) {
 			const double currentHeight = (currentPoint.y - medianSlope * currentPoint.x);
 			if (currentHeight > height) {
-				max.clear();
-				max.push_back(currentPoint);
+				pointsOnTheMaximizedLine.clear();
+				pointsOnTheMaximizedLine.push_back(currentPoint);
 				height = currentHeight;
 			}
 			else if (abs(currentHeight - height) <= EPS) {
-				max.push_back(currentPoint);
+				pointsOnTheMaximizedLine.push_back(currentPoint);
 			}
 		 }
-		sort(max.begin(),
-			 max.end(),
-			 [](const Point a, const Point b) {
-					return a.x < b.x;
-			 }
-		);
+		sortXCoordinatesIn(pointsOnTheMaximizedLine);
 		
-		Point maximizingMin = *(max.begin()),
-			  maximizingMax = *(max.end() - 1);
+		Point maximizingMin = *(pointsOnTheMaximizedLine.begin()),
+			  maximizingMax = *(pointsOnTheMaximizedLine.end() - 1);
 		
-		const PointPair maximizingPointPair = PointPair(maximizingMin, maximizingMax);
-		
-		if (maximizingPointPair.first.x <= medianX && maximizingPointPair.second.x > medianX) {
-			return maximizingPointPair;
+		if (maximizingMin.x <= medianX && maximizingMax.x > medianX) {
+			return PointPair(maximizingMin,
+							 maximizingMax);
 		}
 		
-		if (maximizingPointPair.second.x <= medianX) {
+		if (maximizingMax.x <= medianX) {
 			vector<PointPair> largeAndEqualPairs;
 			largeAndEqualPairs.reserve(largePairs.size() + equalPairs.size());
 			largeAndEqualPairs.insert(largeAndEqualPairs.end(),
@@ -168,7 +157,7 @@ private:
 			}
 		}
 		
-		if (maximizingPointPair.first.x > medianX) {
+		if (maximizingMin.x > medianX) {
 			vector<PointPair> smallAndEqualPairs;
 			smallAndEqualPairs.reserve(smallPairs.size() + equalPairs.size());
 			smallAndEqualPairs.insert(smallAndEqualPairs.end(),
@@ -186,14 +175,120 @@ private:
 				candidates.push_back(pointPair.second);
 			}
 		}
-		sort(candidates.begin(),
-			 candidates.end(),
-			 [](const Point a, const Point b) {
-					return a.x < b.x;
-			 }
-		);
+		return {};
+	}
+	
+	optional<PointPair> continueForLowerBridge(const double medianX,
+											   const double medianSlope,
+											   const vector<PointPair> &largePairs,
+											   const vector<PointPair> &equalPairs,
+											   const vector<PointPair> &smallPairs,
+											   vector<Point> &candidates) {
+		double height = INT_MAX;
+		vector<Point> pointsOnTheMaximizedLine;
+		for(auto &currentPoint: points) {
+			const double currentHeight = (currentPoint.y - medianSlope * currentPoint.x);
+			if (currentHeight < height) {
+				pointsOnTheMaximizedLine.clear();
+				pointsOnTheMaximizedLine.push_back(currentPoint);
+				height = currentHeight;
+			}
+			else if (abs(currentHeight - height) <= EPS) {
+				pointsOnTheMaximizedLine.push_back(currentPoint);
+			}
+		 }
 		
-		return getUpperBridge(candidates, medianX);
+		sortXCoordinatesIn(pointsOnTheMaximizedLine);
+		
+		Point maximizingMin = *(pointsOnTheMaximizedLine.begin()),
+			  maximizingMax = *(pointsOnTheMaximizedLine.end() - 1);
+		
+		if (maximizingMin.x <= medianX && maximizingMax.x > medianX) {
+			return PointPair(maximizingMin,
+							 maximizingMax);
+		}
+		
+		if (maximizingMax.x <= medianX) {
+			vector<PointPair> smallAndEqualPairs;
+			smallAndEqualPairs.reserve(smallPairs.size() + equalPairs.size());
+			smallAndEqualPairs.insert(smallAndEqualPairs.end(),
+									  smallPairs.begin(),
+									  smallPairs.end());
+			smallAndEqualPairs.insert(smallAndEqualPairs.end(),
+									  equalPairs.begin(),
+									  equalPairs.end());
+			
+			for (auto &pointPair : smallAndEqualPairs)
+				candidates.push_back(pointPair.second);
+			
+			for (auto &pointPair : largePairs) {
+				candidates.push_back(pointPair.first);
+				candidates.push_back(pointPair.second);
+			}
+		}
+		
+		if (maximizingMin.x > medianX) {
+			vector<PointPair> largeAndEqualPairs;
+			largeAndEqualPairs.reserve(largePairs.size() + equalPairs.size());
+			largeAndEqualPairs.insert(largeAndEqualPairs.end(),
+									  largePairs.begin(),
+									  largePairs.end());
+			largeAndEqualPairs.insert(largeAndEqualPairs.end(),
+									  equalPairs.begin(),
+									  equalPairs.end());
+			
+			for (auto &pointPair : largeAndEqualPairs)
+				candidates.push_back(pointPair.first);
+			
+			for (auto &pointPair : smallPairs) {
+				candidates.push_back(pointPair.first);
+				candidates.push_back(pointPair.second);
+			}
+		}
+		return {};
+		
+	}
+	
+	PointPair getBridge(const vector<Point> &remainingPoints,
+						double medianX,
+						bool isUpperBridge) {
+		vector<Point> candidates {};
+		const size_t numberOfRemainingPoints = remainingPoints.size();
+		if (numberOfRemainingPoints == 2) {
+			return PointPair(remainingPoints.at(0),
+							 remainingPoints.at(1));
+		}
+		
+		vector<PointPair> pointPairs = makePointPairs(remainingPoints,
+													  candidates);
+		
+		const auto slopes = calculateSlopes(pointPairs,
+											candidates);
+		
+		const double medianSlope = getMedianIn(slopes);
+		
+		// C++17 and higher!!!
+		const auto [smallPairs, equalPairs, largePairs] = getSlopeCharacterPairs(slopes,
+																				 pointPairs,
+																				 medianSlope);
+		const auto result = isUpperBridge ? continueForUpperBridge(medianX,
+																	medianSlope,
+																	largePairs,
+																	equalPairs,
+																	smallPairs,
+																	candidates)
+		 :
+											  continueForLowerBridge(medianX,
+																	 medianSlope,
+																	 largePairs,
+																	 equalPairs,
+																	 smallPairs,
+																	 candidates);
+		if (const auto bridge = result) {
+			return bridge.value();
+		}
+		sortXCoordinatesIn(candidates);
+		return getBridge(candidates, medianX, isUpperBridge);
 	}
 	
 	vector<double> getXCoordinatesIn(const vector<Point> &points) {
@@ -202,87 +297,96 @@ private:
 		return result;
 	}
 	
-	void connect(const Point &firstPoint,
+	void connect(bool isUpperHull,
+				 const Point &firstPoint,
 				 const Point &secondPoint,
 				 vector<Point> &setOfPoints) {
 		
-		sort(setOfPoints.begin(), setOfPoints.end(), [](const Point a, const Point b) {
-			return a.x < b.x;
-		   });
-		
+		sortXCoordinatesIn(setOfPoints);
 		const double medianX = getMedianIn(getXCoordinatesIn(setOfPoints));
-		auto upperBridge = getUpperBridge(setOfPoints, medianX);
-		if (upperBridge.first.x > upperBridge.second.x) {
-			const Point tempPoint = upperBridge.first;
-			upperBridge.first = upperBridge.second;
-			upperBridge.second = tempPoint;
+		auto bridge = getBridge(setOfPoints, medianX, isUpperHull);
+		if (bridge.first.x > bridge.second.x) {
+			const Point tempPoint = bridge.first;
+			bridge.first = bridge.second;
+			bridge.second = tempPoint;
 		}
 		
-		vector<Point> leftSetOfPoints { upperBridge.first };
+		vector<Point> leftSetOfPoints { bridge.first };
 		for (auto &point : setOfPoints) {
-			if (point.x < upperBridge.first.x)
+			if (point.x < bridge.first.x)
 				leftSetOfPoints.push_back(point);
 		}
 
-		vector<Point> rightSetOfPoints { upperBridge.second };
+		vector<Point> rightSetOfPoints { bridge.second };
 		for (auto &point : setOfPoints) {
-			if (point.x > upperBridge.second.x)
+			if (point.x > bridge.second.x)
 				rightSetOfPoints.push_back(point);
 		}
 		
-		if (upperBridge.first == firstPoint) {
-			convexHullPoints.push_back(upperBridge.first);
+		if (bridge.first == firstPoint) {
+			convexHullPoints.push_back(bridge.first);
 		} else {
-			connect(firstPoint, upperBridge.first, leftSetOfPoints);
+			connect(isUpperHull, firstPoint, bridge.first, leftSetOfPoints);
 		}
 
-		if (upperBridge.second == secondPoint) {
-			convexHullPoints.push_back(upperBridge.second);
+		if (bridge.second == secondPoint) {
+			convexHullPoints.push_back(bridge.second);
 		} else {
-			connect(upperBridge.second, secondPoint, rightSetOfPoints);
+			connect(isUpperHull, bridge.second, secondPoint, rightSetOfPoints);
 		}
 	}
 	
-	void getUpperHull(vector<Point> &setOfPoints) {
-		Point minPoint = Point(INT_MAX, INT_MAX);
-		Point maxPoint = Point(INT_MIN, INT_MIN);
-		
-		for (auto &point : setOfPoints) {
-			if (point.x == minPoint.x) {
-				if (point.y >= minPoint.y) {
-					minPoint = point;
-				}
-			}
-			else {
-				if(point.x <= minPoint.x) {
-					minPoint = point;
-				}
-			}
-			
-			if (point.x == maxPoint.x) {
-				if (point.y >= maxPoint.y) {
-					maxPoint = point;
-				}
-			}
-			else {
-				if(point.x >= maxPoint.x) {
-					maxPoint = point;
-				}
-			}
-		}
-		
+	void getPartOfHull(bool isUpperHull,
+					   const Point minPoint,
+					   const Point maxPoint) {
 		if (minPoint == maxPoint) {
 			convexHullPoints.push_back(minPoint);
 			return;
 		}
-		vector<Point> t { minPoint };
-		for (auto &point : setOfPoints ) {
+		vector<Point> hullPoints { minPoint };
+		for (auto &point : points ) {
 			if (point.x > minPoint.x && point.x < maxPoint.x)
-				t.push_back(point);
+				hullPoints.push_back(point);
 		}
-		t.push_back(maxPoint);
+		hullPoints.push_back(maxPoint);
 		
-		connect(minPoint, maxPoint, t);
+		connect(isUpperHull, minPoint, maxPoint, hullPoints);
+	}
+	
+	tuple<
+		Point,
+		Point,
+		Point,
+		Point
+	> getMaximumAndMiniumPointsForBothHulls() {
+		Point maxUpperPoint,
+			  minUpperPoint,
+		      maxLowerPoint,
+		      minLowerPoint;
+		
+		maxUpperPoint = maxLowerPoint = Point(INT_MIN, INT_MIN);
+		minUpperPoint = minLowerPoint = Point(INT_MAX, INT_MAX);
+		
+		for (auto &point : points) {
+			if (point.x == minUpperPoint.x) {
+				if (point.y >= minUpperPoint.y)
+					minUpperPoint = point;
+				else
+					minLowerPoint = point;
+			}
+			else if (point.x <= minUpperPoint.x)
+				minUpperPoint = minLowerPoint = point;
+			
+			if (point.x == maxUpperPoint.x) {
+				if (point.y >= maxUpperPoint.y)
+					maxUpperPoint = point;
+				else
+					minLowerPoint = point;
+			}
+			else if (point.x >= maxUpperPoint.x)
+				maxUpperPoint = maxLowerPoint = point;
+		}
+		return make_tuple(maxUpperPoint, minUpperPoint, maxLowerPoint, minLowerPoint);
 	}
 	
 	void saveToTxt() {
@@ -292,19 +396,18 @@ private:
 	
 public:
 	void run() {
-		getUpperHull(points);
+		const auto [ maxUpperPoint,
+					 minUpperPoint,
+					 maxLowerPoint,
+					 minLowerPoint ] = getMaximumAndMiniumPointsForBothHulls();
+		getPartOfHull(true, minUpperPoint, maxUpperPoint);
+		getPartOfHull(false, minLowerPoint, maxLowerPoint);
 		saveToTxt();
 	}
 	
 	KirkpatrickSeidelAlgorithm(const string &filePath = FILE_COORDINATES_PATH) {
 		HandleFiles::fillVectorWithPointsFromTxt(filePath,
 												 points);
-		sort(this->points.begin(),
-			 this->points.end(),
-			 [](const Point a, const Point b) {
-					return a.x < b.x;
-			 }
-		);
 		convexHullPoints = {};
 	}
 
