@@ -5,18 +5,10 @@
 //  Created by Арсений Токарев on 15.10.2020.
 //
 
-#include <iostream>
-#include <vector>
-#include <string>
-#include <fstream>
 #include <algorithm>
 #include "/Users/arsenytokarev/Desktop/ConvexHull_BMSTU/DataStructures/DataStructures.cpp"
 
 using namespace std;
-
-///Functions
-Result fillVectorWithPointsFromTxt(const string &filePath,
-								 vector<Point> &points);
 
 size_t giveElementWithGreatestXIn(const vector<Point> &points);
 
@@ -24,7 +16,7 @@ PointPosition determinePointPosition(const Point& lineStartPoint,
 									 const Point& lineEndPoint,
 									 Point pointToCheck);
 
-Result fill(vector<Point> &convexHullPoints,
+void fill(vector<Point> &convexHullPoints,
 		  const vector<Point> &allPoints);
 
 void writeToFile(const string filePath,
@@ -34,52 +26,22 @@ void writeToFile(const string filePath,
 
 int main(int argc, const char* argv[]) {
 	vector<Point> points;
-	const Result readingPointsResult = fillVectorWithPointsFromTxt(FILE_LOAD_PATH,
-																   points);
-	if (readingPointsResult == isEmpty) {
-		cout << "Could not find the file or read data from it\n";
-		return -1;
-	}
 	
+	/*  LOAD POINTS FROM FILE  */
+	HandleFiles::fillVectorWithPointsFromTxt(FILE_COORDINATES_PATH,
+											 points);
+	
+	/*  FIND CONVEX HULL  */
 	size_t indexOfElementWithMaxXCoord = giveElementWithGreatestXIn(points);
 	swap(points.at(0), points.at(indexOfElementWithMaxXCoord));
-	
 	vector<Point> convexHullPoints;
 	convexHullPoints.push_back(points.at(0));
+	fill(convexHullPoints, points);
 	
-	const Result fillingConvexHullPointsResult = fill(convexHullPoints, points);
-	if (fillingConvexHullPointsResult == isEmpty) {
-		cout << "Problem with filling CH Points array\n";
-		return -2;
-	}
-
-	//writeToFile("/Users/arsenytokarev/Desktop/Vortex/Wolfram/Convex Hull Points (Method I).txt", points);
-	ofstream saveFile;
-	saveFile.open(FILE_SAVE_PATH_BRUTE_FORCE);
-	if (saveFile.is_open()) {
-		saveFile << convexHullPoints.size() << endl;
-		for (int i = 0; i < convexHullPoints.size(); ++i) {
-			saveFile << convexHullPoints.at(i).x << " " << convexHullPoints.at(i).y << endl;
-		}
-	}
+	/* WRITE CH POINTS TO TXT  */
+	HandleFiles::writeToFile(FILE_SAVE_PATH_BRUTE_FORCE,
+							 convexHullPoints);
 	return 0;
-}
-
-Result fillVectorWithPointsFromTxt(const string &filePath,
-								 vector<Point> &points) {
-	size_t numberOfPoints = 0;
-	ifstream file(filePath);
-	if (file.is_open()) {
-		file >> numberOfPoints;
-		points.reserve(numberOfPoints);
-
-		double xCoord, yCoord;
-		while (file >> xCoord >> yCoord) {
-			points.push_back(Point(xCoord, yCoord));
-		}
-		file.close();
-	}
-	return points.empty() ? isEmpty : isFilled;
 }
 
 size_t giveElementWithGreatestXIn(const vector<Point> &points) {
@@ -111,10 +73,11 @@ PointPosition determinePointPosition(const Point& lineStartPoint,
 	return positionFromTheLine;
 }
 
-Result fill(vector<Point> &convexHullPoints,
+void fill(vector<Point> &convexHullPoints,
 			const vector<Point> &allPoints) {
 	if (allPoints.empty() || convexHullPoints.empty()) {
-		return isEmpty;
+		cout << "There are no points to form a convex hull!\n";
+		exit(-2);
 	}
 	
 	Point formerPoint = convexHullPoints.back();
@@ -166,19 +129,6 @@ Result fill(vector<Point> &convexHullPoints,
 			convexHullPoints.push_back(latterPoint);
 			formerPoint = latterPoint;
 			i = 0;
-		}
-	}
-	return isFilled;
-}
-
-void writeToFile(const string filePath,
-				 const vector<Point> &convexHullPoints) {
-	ofstream saveFile;
-	saveFile.open(filePath);
-	if (saveFile.is_open()) {
-		saveFile << convexHullPoints.size() << endl;
-		for (int i = 0; i < convexHullPoints.size(); ++i) {
-			saveFile << convexHullPoints.at(i).x << " " << convexHullPoints.at(i).y << endl;
 		}
 	}
 }

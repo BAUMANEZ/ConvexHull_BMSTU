@@ -1,9 +1,3 @@
-
-#include <iostream>
-#include <fstream>
-#include <vector>
-#include <algorithm>
-#include <string>
 #include "/Users/arsenytokarev/Desktop/ConvexHull_BMSTU/DataStructures/DataStructures.cpp"
 
 using namespace std;
@@ -22,7 +16,7 @@ void checkIfInputIsCorrect(T &value,
 int main(int argc,
 		 const char* argv[]) {
 	ofstream writeToTxt;
-	writeToTxt.open(FILE_LOAD_PATH);
+	writeToTxt.open(FILE_COORDINATES_PATH);
 
 	if (writeToTxt.is_open()) {
 		bool isRandomFilling;
