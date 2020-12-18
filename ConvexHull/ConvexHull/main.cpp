@@ -6,8 +6,10 @@
 //
 #include "../Kirkpatrick-Seidel/Kirkpatrick-Seidel Algorithm.cpp"
 #include "../NonEffectiveAlgorithm/NonEffectiveAlgorithm.cpp"
+#include "../Helpers/PointsGenerator.cpp"
 
 int main(int argc, const char *argv[]) {
+	PointsGenerator::generatePoints();
 	NonEffectiveAlgorithm().run();
 	KirkpatrickSeidelAlgorithm().run();
 	return 0;
