@@ -9,7 +9,7 @@
 #include "../Helpers/PointsGenerator.cpp"
 
 int main(int argc, const char *argv[]) {
-	PointsGenerator::generatePoints();
+//	PointsGenerator::generatePoints();
 	NonEffectiveAlgorithm().run();
 	KirkpatrickSeidelAlgorithm().run();
 	return 0;

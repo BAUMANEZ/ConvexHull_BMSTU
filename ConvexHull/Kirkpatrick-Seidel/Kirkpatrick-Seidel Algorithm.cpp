@@ -48,7 +48,7 @@ private:
 		vector<PointPair> pointPairs {};
 		size_t startIndex = 0;
 		if (setOfPoints.size() % 2 != 0) {
-			candidates.push_back(*(setOfPoints.begin()++));
+			candidates.push_back(*(setOfPoints.begin()));
 			startIndex = 1;
 		}
 		for (auto iterator = setOfPoints.begin() + startIndex;
@@ -186,30 +186,30 @@ private:
 											   const vector<Point> &remainingPoints,
 											   vector<Point> &candidates) {
 		double height = INT_MAX;
-		vector<Point> pointsOnTheMaximizedLine;
+		vector<Point> pointsOnTheMinimizedLine;
 		for(auto &currentPoint: remainingPoints) {
 			const double currentHeight = (currentPoint.y - medianSlope * currentPoint.x);
 			if (currentHeight < height) {
-				pointsOnTheMaximizedLine.clear();
-				pointsOnTheMaximizedLine.push_back(currentPoint);
+				pointsOnTheMinimizedLine.clear();
+				pointsOnTheMinimizedLine.push_back(currentPoint);
 				height = currentHeight;
 			}
 			else if (abs(currentHeight - height) <= EPS) {
-				pointsOnTheMaximizedLine.push_back(currentPoint);
+				pointsOnTheMinimizedLine.push_back(currentPoint);
 			}
 		 }
 		
-		sortXCoordinatesIn(pointsOnTheMaximizedLine);
+		sortXCoordinatesIn(pointsOnTheMinimizedLine);
 		
-		Point maximizingMin = *(pointsOnTheMaximizedLine.begin()),
-			  maximizingMax = *(pointsOnTheMaximizedLine.end() - 1);
+		Point minimizedMin = *(pointsOnTheMinimizedLine.begin()),
+			  minimizedMax = *(pointsOnTheMinimizedLine.end() - 1);
 		
-		if (maximizingMin.x <= medianX && maximizingMax.x > medianX) {
-			return PointPair(maximizingMin,
-							 maximizingMax);
+		if (minimizedMin.x <= medianX && minimizedMax.x > medianX) {
+			return PointPair(minimizedMin,
+							 minimizedMax);
 		}
 		
-		if (maximizingMax.x <= medianX) {
+		if (minimizedMax.x <= medianX) {
 			vector<PointPair> smallAndEqualPairs;
 			smallAndEqualPairs.reserve(smallPairs.size() + equalPairs.size());
 			smallAndEqualPairs.insert(smallAndEqualPairs.end(),
@@ -228,7 +228,7 @@ private:
 			}
 		}
 		
-		if (maximizingMin.x > medianX) {
+		if (minimizedMin.x > medianX) {
 			vector<PointPair> largeAndEqualPairs;
 			largeAndEqualPairs.reserve(largePairs.size() + equalPairs.size());
 			largeAndEqualPairs.insert(largeAndEqualPairs.end(),
