@@ -8,8 +8,6 @@
 #include <tuple>
 #include <optional>
 
-#define EPS 10e-6
-
 using namespace std;
 
 class KirkpatrickSeidelAlgorithm {
@@ -394,6 +392,10 @@ private:
 								 convexHullPoints);
 	}
 	
+	void connectHullPoints() {
+		
+	}
+	
 public:
 	void run() {
 		const auto [ maxUpperPoint,
@@ -401,7 +403,9 @@ public:
 					 maxLowerPoint,
 					 minLowerPoint ] = getMaximumAndMiniumPointsForBothHulls();
 		getPartOfHull(true, minUpperPoint, maxUpperPoint);
+		reverse(convexHullPoints.begin(), convexHullPoints.end());
 		getPartOfHull(false, minLowerPoint, maxLowerPoint);
+		
 		saveToTxt();
 	}
 	

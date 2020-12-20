@@ -7,13 +7,18 @@
 
 #ifndef PointFile
 #define PointFile
+#define EPS 10e-6
+
+#include <iostream>
 
 struct Point {
 	double x;
 	double y;
 	
 	bool operator== (const Point& coordinate) const {
-		return (coordinate.x == this->x && coordinate.y == this->y);
+		const bool xAreEqual = abs(coordinate.x - this->x) <= EPS;
+		const bool yAreEqual = abs(coordinate.y - this->y) <= EPS;
+		return (xAreEqual && yAreEqual);
 	}
 	
 	Point(double coordX = 0.0, double coordY = 0.0) {
