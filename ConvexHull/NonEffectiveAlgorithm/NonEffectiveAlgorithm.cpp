@@ -9,6 +9,8 @@
 
 struct NonEffectiveAlgorithm {
 private:
+	vector<Point> points, convexHullPoints;
+	
 	size_t giveElementWithGreatestXIn(const vector<Point> &points) {
 		size_t indexOfElementWithMaxXCoord = 0;
 		for (int i = 1; i < points.size() - 1; ++i) {
@@ -38,16 +40,15 @@ private:
 		return positionFromTheLine;
 	}
 
-	void fill(vector<Point> &convexHullPoints,
-				const vector<Point> &allPoints) {
-		if (allPoints.empty() || convexHullPoints.empty()) {
+	void fill() {
+		if (points.empty() || convexHullPoints.empty()) {
 			cout << "There are no points to form a convex hull!\n";
 			exit(-2);
 		}
 		
 		Point formerPoint = convexHullPoints.back();
-		for (int i = 1; i < allPoints.size(); ++i) {
-			const Point latterPoint = allPoints.at(i); // A candidate to be the next point of the Convex Hull
+		for (int i = 1; i < points.size(); ++i) {
+			const Point latterPoint = points.at(i); // A candidate to be the next point of the Convex Hull
 
 			bool areOnTheSameSide = true;
 			int indexInAllPoints = 0;
@@ -56,21 +57,21 @@ private:
 					First iteration: find the first non "within the line" point.
 					Second iteration: compare remaining points with this comparator.
 			*/
-			for (; indexInAllPoints < allPoints.size(); ++indexInAllPoints) {
+			for (; indexInAllPoints < points.size(); ++indexInAllPoints) {
 				comparator = determinePointPosition(formerPoint,
 													latterPoint,
-													allPoints.at(indexInAllPoints));
+													points.at(indexInAllPoints));
 				if (comparator != within) {
 					++indexInAllPoints;
 					break;
 				}
 			}
 
-			for (; indexInAllPoints < allPoints.size(); ++indexInAllPoints) {
+			for (; indexInAllPoints < points.size(); ++indexInAllPoints) {
 				PointPosition currentPointPosition =
 					determinePointPosition(formerPoint,
 										   latterPoint,
-										   allPoints.at(indexInAllPoints));
+										   points.at(indexInAllPoints));
 
 				// If a point lays within a line we can skip it, because it conforms to our condition that all points should be on the side side from the line
 
@@ -97,23 +98,24 @@ private:
 			}
 		}
 	}
-public:
 	void run() {
-		vector<Point> points;
-		
-		/*  LOAD POINTS FROM FILE  */
-		HandleFiles::fillVectorWithPointsFromTxt(FILE_COORDINATES_PATH,
-												 points);
-		
 		/*  FIND CONVEX HULL  */
 		size_t indexOfElementWithMaxXCoord = giveElementWithGreatestXIn(points);
 		swap(points.at(0), points.at(indexOfElementWithMaxXCoord));
-		vector<Point> convexHullPoints;
 		convexHullPoints.push_back(points.at(0));
-		fill(convexHullPoints, points);
-		
-		/* WRITE CH POINTS TO TXT  */
+		fill();
 		HandleFiles::writeToFile(FILE_SAVE_PATH_BRUTE_FORCE,
 								 convexHullPoints);
+		
+	}
+public:
+	void operator()() {
+		this->run();
+	}
+	
+	NonEffectiveAlgorithm() {
+		HandleFiles::fillVectorWithPointsFromTxt(FILE_COORDINATES_PATH,
+												 points);
+		convexHullPoints = {};
 	}
 };

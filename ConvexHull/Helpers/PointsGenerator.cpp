@@ -40,12 +40,12 @@ struct PointsGenerator {
 
 			if (isRandomFilling) {
 				for (int i = 0; i < numberOfPoints; ++i) {
-					double coordX = ((double)(-1 + (rand() % 2) * 2)) * (double)rand() / RAND_MAX * 10000;
-					double coordY = ((double)(-1 + (rand() % 2) * 2)) * (double)rand() / RAND_MAX * 10000;
+					double coordX = ((double)(-1 + (rand() % 2) * 2)) * (double)rand() / RAND_MAX * 1000000;
+					double coordY = ((double)(-1 + (rand() % 2) * 2)) * (double)rand() / RAND_MAX * 1000000;
 					Point temporaryPoint = { coordX, coordY };
 					while (find(coordinates.begin(), coordinates.end(), temporaryPoint) != coordinates.end()) {
-						temporaryPoint.x = ((double)(-1 + (rand() % 2) * 2)) * (double)rand() / RAND_MAX * 10000;
-						temporaryPoint.y = ((double)(-1 + (rand() % 2) * 2)) * (double)rand() / RAND_MAX * 10000;
+						temporaryPoint.x = ((double)(-1 + (rand() % 2) * 2)) * (double)rand() / RAND_MAX * 1000000;
+						temporaryPoint.y = ((double)(-1 + (rand() % 2) * 2)) * (double)rand() / RAND_MAX * 1000000;
 					}
 					coordinates.push_back(temporaryPoint);
 					writeToTxt << temporaryPoint.x << " " << temporaryPoint.y << endl;

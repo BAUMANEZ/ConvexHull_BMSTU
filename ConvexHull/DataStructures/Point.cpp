@@ -7,7 +7,7 @@
 
 #ifndef PointFile
 #define PointFile
-#define EPS 10e-6
+#define EPS 10e-10
 
 #include <iostream>
 
