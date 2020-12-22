@@ -31,8 +31,8 @@ struct measure
 int main(int argc, const char *argv[]) {
 //	PointsGenerator::generatePoints();
 
-	cout << "Kirkpatrick-Seidel algorithm: " << (double) measure<>::execution(KirkpatrickSeidelAlgorithm()) / 100 << endl;
-	
-	cout << "Non effective algorirthm: " << (double)measure<>::execution(NonEffectiveAlgorithm()) / 100 << endl;
+	cout << "Kirkpatrick-Seidel algorithm: " << (double) measure<>::execution(KirkpatrickSeidelAlgorithm()) / 1000 << endl;
+
+	cout << "Non effective algorirthm: " << (double)measure<>::execution(NonEffectiveAlgorithm()) / 1000 << endl;
 	return 0;
 }

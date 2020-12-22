@@ -25,21 +25,32 @@ private:
 		);
 	}
 	
-	template<
-		typename T,
-		typename = typename enable_if<is_arithmetic<T>::value, T>::type
-	>
-	double getMedianIn(vector<T> values) {
-		sort(values.begin(), values.end());
-		const size_t numberOfValues = values.size();
-		switch (numberOfValues % 2) {
-			case 0:
-				return (values[numberOfValues / 2] + values[numberOfValues / 2 - 1]) / 2;
-			default:
-				return values[numberOfValues / 2];
+	double findMedianIn(vector<double> values,
+					    const size_t numberOfElements) {
+	  
+		if (numberOfElements % 2 == 0) {
+	  
+			nth_element(values.begin(),
+						values.begin() + numberOfElements / 2,
+						values.end());
+	  
+			nth_element(values.begin(),
+						values.begin() + (numberOfElements - 1) / 2,
+						values.end());
+	  
+			return (double)(values[(numberOfElements - 1) / 2]
+							+ values[numberOfElements / 2])
+				   / 2.0;
+		}
+		else {
+	
+			nth_element(values.begin(),
+						values.begin() + numberOfElements / 2,
+						values.end());
+
+			return (double)values[numberOfElements / 2];
 		}
 	}
-	
 	vector<PointPair> makePointPairs(const vector<Point> &setOfPoints,
 									 vector<Point> &candidates) {
 		
@@ -52,8 +63,13 @@ private:
 		for (auto iterator = setOfPoints.begin() + startIndex;
 			 iterator < setOfPoints.end();
 			 iterator += 2) {
-			pointPairs.emplace_back(PointPair(*iterator,
-										   *(iterator + 1)));
+			if (iterator->x < (iterator + 1)->x) {
+				pointPairs.emplace_back(PointPair(*iterator,
+												  *(iterator + 1)));
+			} else {
+				pointPairs.emplace_back(PointPair(*(iterator + 1),
+												  *(iterator)));
+			}
 		}
 		
 		return pointPairs;
@@ -66,10 +82,6 @@ private:
 	> getSlopeCharacterPairs(const vector<double> &slopes,
 							 const vector<PointPair> &pointPairs,
 							 const double medianSlope) {
-		if (slopes.size() != pointPairs.size()) {
-			cout << "Slopes.size != pointPairs.size" << endl;
-			exit(-4);
-		}
 		vector<PointPair> smallPairs {}, equalPairs {}, largePairs {};
 		smallPairs.reserve(pointPairs.size() / 3);
 		equalPairs.reserve(pointPairs.size() / 3);
@@ -140,16 +152,9 @@ private:
 		}
 		
 		if (maximizingMax.x <= medianX) {
-			vector<PointPair> largeAndEqualPairs;
-			largeAndEqualPairs.reserve(largePairs.size() + equalPairs.size());
-			largeAndEqualPairs.insert(largeAndEqualPairs.end(),
-									  largePairs.begin(),
-									  largePairs.end());
-			largeAndEqualPairs.insert(largeAndEqualPairs.end(),
-									  equalPairs.begin(),
-									  equalPairs.end());
-			
-			for (auto &pointPair : largeAndEqualPairs)
+			for (auto &pointPair : largePairs)
+				candidates.emplace_back(pointPair.second);
+			for (auto &pointPair : equalPairs)
 				candidates.emplace_back(pointPair.second);
 			
 			for (auto &pointPair : smallPairs) {
@@ -159,16 +164,9 @@ private:
 		}
 		
 		if (maximizingMin.x > medianX) {
-			vector<PointPair> smallAndEqualPairs;
-			smallAndEqualPairs.reserve(smallPairs.size() + equalPairs.size());
-			smallAndEqualPairs.insert(smallAndEqualPairs.end(),
-									  smallPairs.begin(),
-									  smallPairs.end());
-			smallAndEqualPairs.insert(smallAndEqualPairs.end(),
-									  equalPairs.begin(),
-									  equalPairs.end());
-			
-			for (auto &pointPair : smallAndEqualPairs)
+			for (auto &pointPair : smallPairs)
+				candidates.emplace_back(pointPair.first);
+			for (auto &pointPair : equalPairs)
 				candidates.emplace_back(pointPair.first);
 			
 			for (auto &pointPair : largePairs) {
@@ -211,16 +209,9 @@ private:
 		}
 		
 		if (minimizedMax.x <= medianX) {
-			vector<PointPair> smallAndEqualPairs;
-			smallAndEqualPairs.reserve(smallPairs.size() + equalPairs.size());
-			smallAndEqualPairs.insert(smallAndEqualPairs.end(),
-									  smallPairs.begin(),
-									  smallPairs.end());
-			smallAndEqualPairs.insert(smallAndEqualPairs.end(),
-									  equalPairs.begin(),
-									  equalPairs.end());
-			
-			for (auto &pointPair : smallAndEqualPairs)
+			for (auto &pointPair : smallPairs)
+				candidates.emplace_back(pointPair.second);
+			for (auto &pointPair : equalPairs)
 				candidates.emplace_back(pointPair.second);
 			
 			for (auto &pointPair : largePairs) {
@@ -230,16 +221,9 @@ private:
 		}
 		
 		if (minimizedMin.x > medianX) {
-			vector<PointPair> largeAndEqualPairs;
-			largeAndEqualPairs.reserve(largePairs.size() + equalPairs.size());
-			largeAndEqualPairs.insert(largeAndEqualPairs.end(),
-									  largePairs.begin(),
-									  largePairs.end());
-			largeAndEqualPairs.insert(largeAndEqualPairs.end(),
-									  equalPairs.begin(),
-									  equalPairs.end());
-			
-			for (auto &pointPair : largeAndEqualPairs)
+			for (auto &pointPair : largePairs)
+				candidates.emplace_back(pointPair.first);
+			for (auto &pointPair : equalPairs)
 				candidates.emplace_back(pointPair.first);
 			
 			for (auto &pointPair : smallPairs) {
@@ -264,10 +248,10 @@ private:
 		vector<PointPair> pointPairs = makePointPairs(remainingPoints,
 													  candidates);
 		
-		const auto slopes = calculateSlopes(pointPairs,
-											candidates);
+		auto slopes = calculateSlopes(pointPairs,
+									  candidates);
 		
-		const double medianSlope = getMedianIn(slopes);
+		const double medianSlope = findMedianIn(slopes, slopes.size());
 		
 		// C++17 and higher!!!
 		const auto [smallPairs, equalPairs, largePairs] = getSlopeCharacterPairs(slopes,
@@ -291,14 +275,14 @@ private:
 		if (const auto bridge = result) {
 			return bridge.value();
 		}
-		sortXCoordinatesIn(candidates);
 		return getBridge(candidates, medianX, isUpperBridge);
 	}
 	
 	vector<double> getXCoordinatesIn(const vector<Point> &points) {
 		vector<double> result;
 		result.reserve(points.size());
-		for (auto &point : points) result.emplace_back(point.x);
+		for (auto &point : points)
+			result.emplace_back(point.x);
 		return result;
 	}
 	
@@ -306,8 +290,8 @@ private:
 				 const Point &firstPoint,
 				 const Point &secondPoint,
 				 vector<Point> &setOfPoints) {
-		sortXCoordinatesIn(setOfPoints);
-		const double medianX = getMedianIn(getXCoordinatesIn(setOfPoints));
+		
+		const double medianX = findMedianIn(getXCoordinatesIn(setOfPoints), setOfPoints.size());
 		auto bridge = getBridge(setOfPoints, medianX, isUpperHull);
 		if (bridge.first.x > bridge.second.x) {
 			const Point tempPoint = bridge.first;
@@ -315,7 +299,7 @@ private:
 			bridge.second = tempPoint;
 		}
 		
-		vector<Point> leftSetOfPoints ;// { bridge.first };
+		vector<Point> leftSetOfPoints ;
 		leftSetOfPoints.reserve(setOfPoints.size() / 2);
 		leftSetOfPoints.emplace_back(bridge.first);
 		for (auto &point : setOfPoints) {
@@ -323,7 +307,7 @@ private:
 				leftSetOfPoints.emplace_back(point);
 		}
 
-		vector<Point> rightSetOfPoints; //{ bridge.second };
+		vector<Point> rightSetOfPoints;
 		rightSetOfPoints.reserve(setOfPoints.size() / 2);
 		rightSetOfPoints.emplace_back(bridge.second);
 		for (auto &point : setOfPoints) {
@@ -349,7 +333,7 @@ private:
 			convexHullPoints.emplace_back(minPoint);
 			return;
 		}
-		vector<Point> hullPoints ;//{ minPoint };
+		vector<Point> hullPoints ;
 		hullPoints.reserve(points.size());
 		hullPoints.emplace_back(minPoint);
 		for (auto &point : points ) {
@@ -418,6 +402,8 @@ private:
 		getPartOfHull(false, minLowerPoint, maxLowerPoint);
 		if (!(maxLowerPoint == maxUpperPoint))
 			convexHullPoints.emplace_back(maxUpperPoint);
+		else
+			convexHullPoints.erase(convexHullPoints.end() - 1);
 		saveToTxt();
 	}
 	

@@ -37,16 +37,18 @@ struct PointsGenerator {
 			int numberOfPoints = 0;
 			checkIfInputIsCorrect(numberOfPoints, "How many points do you need?");
 			writeToTxt << numberOfPoints << endl;
-
+			
+			double xStart, xEnd, yStart, yEnd;
+			checkIfInputIsCorrect(xStart, "Min X: ");
+			checkIfInputIsCorrect(xEnd, "Max X");
+			checkIfInputIsCorrect(yStart, "Min Y: ");
+			checkIfInputIsCorrect(yEnd, "Max Y");
+			
 			if (isRandomFilling) {
 				for (int i = 0; i < numberOfPoints; ++i) {
-					double coordX = ((double)(-1 + (rand() % 2) * 2)) * (double)rand() / RAND_MAX * 1000000;
-					double coordY = ((double)(-1 + (rand() % 2) * 2)) * (double)rand() / RAND_MAX * 1000000;
+					double coordX = xStart +(double)rand() / RAND_MAX * (xEnd - xStart);
+					double coordY = yStart + (double)rand() / RAND_MAX * (yEnd - yStart);
 					Point temporaryPoint = { coordX, coordY };
-					while (find(coordinates.begin(), coordinates.end(), temporaryPoint) != coordinates.end()) {
-						temporaryPoint.x = ((double)(-1 + (rand() % 2) * 2)) * (double)rand() / RAND_MAX * 1000000;
-						temporaryPoint.y = ((double)(-1 + (rand() % 2) * 2)) * (double)rand() / RAND_MAX * 1000000;
-					}
 					coordinates.push_back(temporaryPoint);
 					writeToTxt << temporaryPoint.x << " " << temporaryPoint.y << endl;
 				}
@@ -55,9 +57,6 @@ struct PointsGenerator {
 			}
 
 			for (int i = 0; i < numberOfPoints; ++i) {
-				//Now I have no idea whether we have to make all these points unique. I am not going to handle
-				//duplicates check in case a user chooses manual input of points.
-
 				cout << "POINT" << i + 1 << endl;
 				double coordX = 0.0, coordY = 0.0;
 				checkIfInputIsCorrect(coordX, "Coordinate X");
