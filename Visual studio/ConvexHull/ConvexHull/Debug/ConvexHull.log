@@ -1,0 +1,31 @@
+﻿  ConvexHull.cpp
+\\Mac\Home\Desktop\ConvexHull_BMSTU\Visual studio\ConvexHull\ConvexHull\KirkpatrickSeidelAlgorithm.cpp(396,28): warning C4129: H: неизвестная escape-последовательность
+\\Mac\Home\Desktop\ConvexHull_BMSTU\Visual studio\ConvexHull\ConvexHull\KirkpatrickSeidelAlgorithm.cpp(396,28): warning C4129: D: неизвестная escape-последовательность
+\\Mac\Home\Desktop\ConvexHull_BMSTU\Visual studio\ConvexHull\ConvexHull\KirkpatrickSeidelAlgorithm.cpp(396,28): warning C4129: C: неизвестная escape-последовательность
+\\Mac\Home\Desktop\ConvexHull_BMSTU\Visual studio\ConvexHull\ConvexHull\KirkpatrickSeidelAlgorithm.cpp(396,28): warning C4129: V: неизвестная escape-последовательность
+\\Mac\Home\Desktop\ConvexHull_BMSTU\Visual studio\ConvexHull\ConvexHull\KirkpatrickSeidelAlgorithm.cpp(396,28): warning C4129: T: неизвестная escape-последовательность
+\\Mac\Home\Desktop\ConvexHull_BMSTU\Visual studio\ConvexHull\ConvexHull\KirkpatrickSeidelAlgorithm.cpp(424,54): warning C4129: H: неизвестная escape-последовательность
+\\Mac\Home\Desktop\ConvexHull_BMSTU\Visual studio\ConvexHull\ConvexHull\KirkpatrickSeidelAlgorithm.cpp(424,54): warning C4129: D: неизвестная escape-последовательность
+\\Mac\Home\Desktop\ConvexHull_BMSTU\Visual studio\ConvexHull\ConvexHull\KirkpatrickSeidelAlgorithm.cpp(424,54): warning C4129: C: неизвестная escape-последовательность
+\\Mac\Home\Desktop\ConvexHull_BMSTU\Visual studio\ConvexHull\ConvexHull\KirkpatrickSeidelAlgorithm.cpp(424,54): warning C4129: V: неизвестная escape-последовательность
+\\Mac\Home\Desktop\ConvexHull_BMSTU\Visual studio\ConvexHull\ConvexHull\KirkpatrickSeidelAlgorithm.cpp(424,54): warning C4129: T: неизвестная escape-последовательность
+\\Mac\Home\Desktop\ConvexHull_BMSTU\Visual studio\ConvexHull\ConvexHull\KirkpatrickSeidelAlgorithm.cpp(424,54): warning C4129: c: неизвестная escape-последовательность
+\\Mac\Home\Desktop\ConvexHull_BMSTU\Visual studio\ConvexHull\ConvexHull\KirkpatrickSeidelAlgorithm.cpp(71,21): warning C4018: <: несоответствие типов со знаком и без знака
+\\Mac\Home\Desktop\ConvexHull_BMSTU\Visual studio\ConvexHull\ConvexHull\NonEffectiveAlgorithm.cpp(100,28): warning C4129: H: неизвестная escape-последовательность
+\\Mac\Home\Desktop\ConvexHull_BMSTU\Visual studio\ConvexHull\ConvexHull\NonEffectiveAlgorithm.cpp(100,28): warning C4129: D: неизвестная escape-последовательность
+\\Mac\Home\Desktop\ConvexHull_BMSTU\Visual studio\ConvexHull\ConvexHull\NonEffectiveAlgorithm.cpp(100,28): warning C4129: C: неизвестная escape-последовательность
+\\Mac\Home\Desktop\ConvexHull_BMSTU\Visual studio\ConvexHull\ConvexHull\NonEffectiveAlgorithm.cpp(100,28): warning C4129: V: неизвестная escape-последовательность
+\\Mac\Home\Desktop\ConvexHull_BMSTU\Visual studio\ConvexHull\ConvexHull\NonEffectiveAlgorithm.cpp(100,28): warning C4129: T: неизвестная escape-последовательность
+\\Mac\Home\Desktop\ConvexHull_BMSTU\Visual studio\ConvexHull\ConvexHull\NonEffectiveAlgorithm.cpp(110,44): warning C4129: H: неизвестная escape-последовательность
+\\Mac\Home\Desktop\ConvexHull_BMSTU\Visual studio\ConvexHull\ConvexHull\NonEffectiveAlgorithm.cpp(110,44): warning C4129: D: неизвестная escape-последовательность
+\\Mac\Home\Desktop\ConvexHull_BMSTU\Visual studio\ConvexHull\ConvexHull\NonEffectiveAlgorithm.cpp(110,44): warning C4129: C: неизвестная escape-последовательность
+\\Mac\Home\Desktop\ConvexHull_BMSTU\Visual studio\ConvexHull\ConvexHull\NonEffectiveAlgorithm.cpp(110,44): warning C4129: V: неизвестная escape-последовательность
+\\Mac\Home\Desktop\ConvexHull_BMSTU\Visual studio\ConvexHull\ConvexHull\NonEffectiveAlgorithm.cpp(110,44): warning C4129: T: неизвестная escape-последовательность
+\\Mac\Home\Desktop\ConvexHull_BMSTU\Visual studio\ConvexHull\ConvexHull\NonEffectiveAlgorithm.cpp(110,44): warning C4129: c: неизвестная escape-последовательность
+\\Mac\Home\Desktop\ConvexHull_BMSTU\Visual studio\ConvexHull\ConvexHull\PointsGenerator.cpp(23,19): warning C4129: H: неизвестная escape-последовательность
+\\Mac\Home\Desktop\ConvexHull_BMSTU\Visual studio\ConvexHull\ConvexHull\PointsGenerator.cpp(23,19): warning C4129: D: неизвестная escape-последовательность
+\\Mac\Home\Desktop\ConvexHull_BMSTU\Visual studio\ConvexHull\ConvexHull\PointsGenerator.cpp(23,19): warning C4129: C: неизвестная escape-последовательность
+\\Mac\Home\Desktop\ConvexHull_BMSTU\Visual studio\ConvexHull\ConvexHull\PointsGenerator.cpp(23,19): warning C4129: V: неизвестная escape-последовательность
+\\Mac\Home\Desktop\ConvexHull_BMSTU\Visual studio\ConvexHull\ConvexHull\PointsGenerator.cpp(23,19): warning C4129: T: неизвестная escape-последовательность
+\\Mac\Home\Desktop\ConvexHull_BMSTU\Visual studio\ConvexHull\ConvexHull\PointsGenerator.cpp(23,19): warning C4129: c: неизвестная escape-последовательность
+  ConvexHull.vcxproj -> \\Mac\Home\Desktop\ConvexHull_BMSTU\Visual studio\ConvexHull\Debug\ConvexHull.exe
