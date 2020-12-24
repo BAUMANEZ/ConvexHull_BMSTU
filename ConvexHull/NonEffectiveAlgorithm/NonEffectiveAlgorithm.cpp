@@ -61,7 +61,6 @@ private:
 					First iteration: find the first non "within the line" point.
 					Second iteration: compare remaining points with this comparator.
 			*/
-			
 			for (; nestedIterator < points.end(); ++nestedIterator) {
 				comparator = determinePointPosition(formerPoint,
 													latterPoint,

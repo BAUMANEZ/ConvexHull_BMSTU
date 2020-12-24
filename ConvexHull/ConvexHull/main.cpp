@@ -29,7 +29,7 @@ struct measure
 
 
 int main(int argc, const char *argv[]) {
-	PointsGenerator::generatePoints();
+//	PointsGenerator::generatePoints();
 
 	cout << "Kirkpatrick-Seidel algorithm: " << (double) measure<>::execution(KirkpatrickSeidelAlgorithm()) / 1000 << endl;
 
