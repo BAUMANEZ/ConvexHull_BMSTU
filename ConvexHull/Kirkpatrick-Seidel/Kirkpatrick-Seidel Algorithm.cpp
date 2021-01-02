@@ -75,14 +75,12 @@ private:
 		return pointPairs;
 	}
 	
-	tuple<
-		vector<PointPair>,
-		vector<PointPair>,
-		vector<PointPair>
-	> getSlopeCharacterPairs(const vector<double> &slopes,
-							 const vector<PointPair> &pointPairs,
-							 const double medianSlope) {
-		vector<PointPair> smallPairs {}, equalPairs {}, largePairs {};
+	void getSlopeCharacterPairs(vector<PointPair> &smallPairs,
+								vector<PointPair> &equalPairs,
+								vector<PointPair> &largePairs,
+								const vector<double> &slopes,
+								const vector<PointPair> &pointPairs,
+								const double medianSlope) {
 		smallPairs.reserve(pointPairs.size() / 3);
 		equalPairs.reserve(pointPairs.size() / 3);
 		largePairs.reserve(pointPairs.size() / 3);
@@ -99,7 +97,6 @@ private:
 				equalPairs.emplace_back(pointPair);
 			}
 		}
-		return make_tuple(smallPairs, equalPairs, largePairs);
 	}
 	
 	vector<double> calculateSlopes(vector<PointPair> &pointPairs,
@@ -253,10 +250,13 @@ private:
 		
 		const double medianSlope = findMedianIn(slopes, slopes.size());
 		
-		// C++17 and higher!!!
-		const auto [smallPairs, equalPairs, largePairs] = getSlopeCharacterPairs(slopes,
-																				 pointPairs,
-																				 medianSlope);
+		vector<PointPair> smallPairs {}, equalPairs {}, largePairs {};
+		getSlopeCharacterPairs(smallPairs,
+							   equalPairs,
+							   largePairs,
+							   slopes,
+							   pointPairs,
+							   medianSlope);
 		const auto result = isUpperBridge ? continueForUpperBridge(medianX,
 																	medianSlope,
 																	largePairs,
