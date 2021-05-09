@@ -26,6 +26,10 @@ public:
         this->nodes[index] = route;
     }
     
+    void swap(size_t i, size_t j) {
+        std::swap(this->nodes[i], this->nodes[j]);
+    }
+    
     double distance(const size_t from, const size_t to) {
         return travelCostMatrix[nodes[from]][nodes[to]];
     }
@@ -37,8 +41,8 @@ public:
     double cost(const size_t start, const size_t end) {
         double totalCost = 0;
         for (auto i = start; i < end; ++i) {
-            const double from = (*this)[i];
-            const double to = (*this)[i + 1];
+            const size_t from = (*this)[i];
+            const size_t to = (*this)[(i + 1)]; //>= end ? start : (i + 1)];
             totalCost += travelCostMatrix[from][to];
         }
         return totalCost;

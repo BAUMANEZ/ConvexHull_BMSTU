@@ -5,9 +5,10 @@
 //  Created by Арсений Токарев on 08.05.2021.
 //
 
-#define INPUT_FILE_PATH "/Users/arsenytokarev/Desktop/Travelling Salesman/Travelling Salesman/Helpers/TextFile.txt"
+#define INPUT_FILE_PATH "/Users/arsenytokarev/Desktop/BMSTU_Practices/TSP/TSPXcode/TSPXcode/Helpers/TextFile.txt"
 
 #include "Tour.cpp"
+#include <float.h>
 
 class TSPAlgorithm {
 protected:
@@ -21,6 +22,26 @@ public:
 //        }
         std::cout << std::endl;
         std::cout << tour.tripLength() << std::endl;
+    }
+};
+
+class NNAlgorithm : public TSPAlgorithm {
+    Tour giveBestTour(const Tour& initTour) {
+        auto bestTour = initTour;
+        for (size_t i = 0; i < bestTour.count() - 1; ++i) {
+            double minRouteCost = DBL_MAX , nextRouteIndex = 0;
+            for (size_t j = i + 1; j < bestTour.count(); ++j) {
+                
+                if (bestTour.distance(i,j) < minRouteCost )
+                {
+                    minRouteCost = bestTour.distance(i, j);
+                    nextRouteIndex = j;
+                }
+                
+            }
+            bestTour.swap(i + 1, nextRouteIndex);
+        }
+        return bestTour;
     }
 };
 
@@ -46,7 +67,6 @@ class TwoOptAlgorithm: public TSPAlgorithm {
         return bestTour;
     }
 };
-
 class ThreeOptAlgorithm: public TSPAlgorithm {
     Tour giveBestTour(const Tour& initTour) override {
         auto bestTour = initTour;
