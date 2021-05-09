@@ -14,7 +14,8 @@
 int main(int argc, const char * argv[]) {
     //auto routes1 = Routes(INPUT_FILE_PATH);
     //routes1.run(1);
-    ThreeOptAlgorithm().run();
+    TwoOptAlgorithm().run();
+    NNAlgorithm().run();
     return 0;
 }
 

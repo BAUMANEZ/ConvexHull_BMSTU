@@ -42,7 +42,7 @@ public:
         double totalCost = 0;
         for (auto i = start; i < end; ++i) {
             const size_t from = (*this)[i];
-            const size_t to = (*this)[(i + 1)]; //>= end ? start : (i + 1)];
+            const size_t to = (*this)[ (i + 1) >= end ? start : (i + 1) ];
             totalCost += travelCostMatrix[from][to];
         }
         return totalCost;

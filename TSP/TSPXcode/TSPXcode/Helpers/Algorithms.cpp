@@ -31,13 +31,11 @@ class NNAlgorithm : public TSPAlgorithm {
         for (size_t i = 0; i < bestTour.count() - 1; ++i) {
             double minRouteCost = DBL_MAX , nextRouteIndex = 0;
             for (size_t j = i + 1; j < bestTour.count(); ++j) {
-                
                 if (bestTour.distance(i,j) < minRouteCost )
                 {
                     minRouteCost = bestTour.distance(i, j);
                     nextRouteIndex = j;
                 }
-                
             }
             bestTour.swap(i + 1, nextRouteIndex);
         }
