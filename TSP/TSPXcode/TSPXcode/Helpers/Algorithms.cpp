@@ -5,7 +5,7 @@
 //  Created by Арсений Токарев on 08.05.2021.
 //
 
-#define INPUT_FILE_PATH "/Users/arsenytokarev/Desktop/BMSTU_Practices/TSP/TSPXcode/TSPXcode/Helpers/TextFile.txt"
+#define INPUT_FILE_PATH "/Users/arsenytokarev/Desktop/BMSTU_Practices/TSP/TSPXcode/TSPXcode/Helpers/costMatrix.txt"
 
 #include "Tour.cpp"
 #include <float.h>
@@ -17,11 +17,12 @@ protected:
 public:
     virtual void run() {
         auto tour = giveBestTour(Tour(INPUT_FILE_PATH));
-//        for (auto& x: tour) {
-//            std::cout << x << "  ";
-//        }
+        for (size_t i = 0; i < tour.count(); ++i) {
+            std::cout << tour[i] + 1 << " -> ";
+        }
+        std::cout << "1";
         std::cout << std::endl;
-        std::cout << tour.tripLength() << std::endl;
+        std::cout << tour.tripLength() << std::endl << std::endl;
     }
 };
 
@@ -49,15 +50,13 @@ class TwoOptAlgorithm: public TSPAlgorithm {
         auto bestTour = initTour;
         do {
             isImproved = false;
-            double bestDistance = bestTour.tripLength();
             for (size_t i = 1; i < bestTour.count() - 1; ++i) {
                 for (size_t j = i + 1; j < bestTour.count(); ++j) {
-                    auto newTour = bestTour.reversed(i, j);
-                    const double newDistance = newTour.tripLength();
-                    if (newDistance < bestDistance) {
+                    double oldDelta = bestTour.distance(i-1, i) + bestTour.distance(j, j+1);
+                    double newDelta = bestTour.distance(i-1, j) + bestTour.distance(i, j+1);
+                    if (newDelta < oldDelta) {
                         isImproved = true;
-                        bestTour = newTour;
-                        bestDistance = newDistance;
+                        bestTour.reverse(i, j);
                     }
                 }
             }
