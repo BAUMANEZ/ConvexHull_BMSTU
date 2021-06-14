@@ -10,11 +10,15 @@ typedef std::vector<NumericVector> NumericMatrix;
 
 struct Tour {
 public:
-    double operator[](size_t i) {
+    double operator[](size_t i) const {
         return nodes[i];
     }
     
     void operator=(Tour& other) {
+        this->nodes = other.nodes;
+    }
+    
+    void operator=(const Tour& other) {
         this->nodes = other.nodes;
     }
     
@@ -30,26 +34,34 @@ public:
         std::swap(this->nodes[i], this->nodes[j]);
     }
     
-    double distance(const size_t from, const size_t to) {
+    double distance(const size_t from, const size_t to) const {
         return travelCostMatrix[nodes[from]][nodes[to]];
     }
     
-    size_t count() {
+    size_t count() const {
         return nodes.size();
     }
     
-    double cost(const size_t start, const size_t end) {
+    double cost(const size_t start, const size_t end) const {
         double totalCost = 0;
-        for (auto i = start; i < end; ++i) {
-            const size_t from = (*this)[i];
-            const size_t to = (*this)[ (i + 1) >= end ? start : (i + 1) ];
-            totalCost += travelCostMatrix[from][to];
+        if (start <= end) {
+            for (auto i = start; i < end; ++i) {
+                const size_t from = (*this)[i];
+                const size_t to = (*this)[ (i + 1) % this->count() ];
+                totalCost += travelCostMatrix[from][to];
+            }
+        } else {
+            for (auto i = end; i > start; --i) {
+                const size_t from = (*this)[i];
+                const size_t to = (*this)[ (i - 1) % this->count() ];
+                totalCost += travelCostMatrix[from][to];
+            }
         }
         return totalCost;
     }
     
-    Tour reversed(size_t start, size_t end) {
-        auto resultTour = *this;
+    Tour reversed(size_t start, size_t end) const {
+        Tour resultTour {*this};
         while (start < end) {
             std::swap(resultTour.nodes[start], resultTour.nodes[end]);
             ++start; --end;
@@ -64,7 +76,7 @@ public:
         }
     }
     
-    double tripLength() {
+    double tripLength() const {
         return cost(0, nodes.size());
     }
     

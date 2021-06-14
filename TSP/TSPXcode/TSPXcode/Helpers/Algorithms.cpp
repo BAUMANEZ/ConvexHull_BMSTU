@@ -52,11 +52,11 @@ class TwoOptAlgorithm: public TSPAlgorithm {
             isImproved = false;
             for (size_t i = 1; i < bestTour.count() - 1; ++i) {
                 for (size_t j = i + 1; j < bestTour.count(); ++j) {
-                    double oldDelta = bestTour.distance(i-1, i) + bestTour.distance(j, j+1);
-                    double newDelta = bestTour.distance(i-1, j) + bestTour.distance(i, j+1);
-                    if (newDelta < oldDelta) {
+                    const auto ijChange = bestTour.reversed(i, j);
+                    if (ijChange.tripLength() < bestTour.tripLength()) {
                         isImproved = true;
                         bestTour.reverse(i, j);
+                        break;
                     }
                 }
             }
@@ -67,63 +67,56 @@ class TwoOptAlgorithm: public TSPAlgorithm {
 class ThreeOptAlgorithm: public TSPAlgorithm {
     Tour giveBestTour(const Tour& initTour) override {
         auto bestTour = initTour;
-        double delta = 0;
-        const size_t numberOfRoutes = bestTour.count();
-        while (true) {
-            for (size_t i = 0; i < numberOfRoutes; ++i) {
-                for (size_t j = i + 2; j < numberOfRoutes; ++j) {
-                    for (size_t k = j + 2; k < numberOfRoutes + 1; ++k) {
-                        delta += reverseIfBetter(bestTour, i, j, k);
-                        std::cout << i << "  " << j << "  " << k << std::endl;
+        bool isImproved = true;
+        do {
+            isImproved = false;
+            for (size_t i = 1; i < bestTour.count() - 2; ++i) {
+                for (size_t j = i + 1; j < bestTour.count() - 1 ; ++j) {
+                    for (size_t k = j + 1; k < bestTour.count(); ++k) {
+                        if (isBetterWhenReversed(bestTour, i, j, k)) {
+                            isImproved = true;
+                            break;
+                        }
                     }
                 }
             }
-            if (delta >= 0)
-                break;
-        }
-        
+        } while (isImproved);
         return bestTour;
     }
     
-    double reverseIfBetter(Tour& tour, size_t i, size_t j, size_t k) {
-        int A = tour[i - 1];
-        int B = tour[i];
-        int C = tour[j - 1];
-        int D = tour[j];
-        int E = tour[k - 1];
-        int F = tour[k % tour.count()];
+    bool isBetterWhenReversed(Tour& tour, size_t i, size_t j, size_t k) {
+        const Tour __ij__Reverse = tour.reversed(i, j);
+        const Tour __ik__Reverse = tour.reversed(i, k);
+        const Tour __jk__Reverse = tour.reversed(j, k);
+        const Tour __ij_jk__Reverse = __ij__Reverse.reversed(j, k);
+        const Tour __jk_ij__Reverse = __jk__Reverse.reversed(i, j);
+        const Tour __ik_ij__Reverse = __ik__Reverse.reversed(i, j);
+        const Tour __ik_jk__Reverse = __ik__Reverse.reversed(j, k);
         
-        double d0 = tour.distance(A, B) + tour.distance(C, D) + tour.distance(E, F);
-        double d1 = tour.distance(A, C) + tour.distance(B, D) + tour.distance(E, F);
-        double d2 = tour.distance(A, B) + tour.distance(C, E) + tour.distance(D, F);
-        double d3 = tour.distance(A, D) + tour.distance(E, B) + tour.distance(C, F);
-        double d4 = tour.distance(F, B) + tour.distance(C, D) + tour.distance(E, A);
+        const std::initializer_list<Tour> compList = {tour, __ij__Reverse, __ik__Reverse, __jk__Reverse, __ij_jk__Reverse, __jk_ij__Reverse, __ik_ij__Reverse, __ik_jk__Reverse};
         
-        if(d0 > d1) {
-            auto temp = tour.reversed(i, j);
-            tour = temp;
-            return -d0 + d1;
+        auto lambda = [](const Tour& one, const Tour& two){
+            return one.tripLength() < two.tripLength();
+        };
+        
+        const auto locallyShortestTour = std::min(compList, lambda);
+        if (locallyShortestTour.tripLength() < tour.tripLength()) {
+            tour = locallyShortestTour;
+            return true;
         }
-        else if(d0 > d2) {
-            auto temp = tour.reversed(j, k);
-            tour = temp;
-            return -d0 + d2;
-        }
-        else if(d0 > d4) {
-            auto temp = tour.reversed(i, k);
-            tour = temp;
-            return -d0 + d4;
-        }
-        else if(d0 > d3) {
-            NumericVector tmp;
-            for(size_t z = j; z < k; ++z)
-                tmp.push_back(tour[z]);
-            for(size_t z = i; z < j; ++z)
-                tmp.push_back(tour[z]);
-            for(size_t f = i; f < k; ++f)
-                tour.replace(f, tmp[f]);
-            return -d0 + d3;
-        }
-        return 0;
+        
+        return  false;
     }
 };
+
+
+
+/* For future improvements */
+
+//                    const double oldDelta = bestTour.cost(i - 1, j + 1);
+//                    const double newDelta = bestTour.distance(i - 1, j) + bestTour.cost(j, i) + bestTour.distance(i, j + 1);
+//                    if (newDelta < oldDelta) {
+//                        isImproved = true;
+//                        bestTour.reverse(i, j);
+//                        break;
+//                    }

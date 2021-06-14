@@ -12,11 +12,9 @@
 #include "Helpers/Algorithms.cpp"
 
 int main(int argc, const char * argv[]) {
-    //auto routes1 = Routes(INPUT_FILE_PATH);
-    //routes1.run(1);
-    TwoOptAlgorithm().run();
-//    ThreeOptAlgorithm().run();
     NNAlgorithm().run();
+    TwoOptAlgorithm().run();
+    ThreeOptAlgorithm().run();
     return 0;
 }
 
